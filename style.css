@@ -13,6 +13,9 @@ h1{
     font-size: 3rem;
     text-align: center;
 }
+input{
+    font-size: 1.5rem;
+}
 /* main */
 main{
     flex-basis: 100vw;
@@ -30,11 +33,12 @@ nav{margin-top: 32.160px;
 }
 
 /* user */
-.user{
+.user, .drivingLicenseSection{
     margin: auto;
     width: 30vw;
     display: flex;
     flex-direction: column;
+    font-size: 1.5rem;
 }
 
 /* btnSection */
@@ -48,4 +52,33 @@ button{
 }
 button:hover{
     background-color: cadetblue;
+}
+
+
+/* driving license */
+.drivingLicenseSection{
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+ul{
+    margin: 0;
+    padding: 10px;
+    width: 30vw;
+    /* flex-basis: 50%; */
+    list-style-type: none;
+    
+}
+li{
+    font-size: 1.5rem;
+    padding: 10px 0;
+    
+}
+li:nth-child{
+    background-color: cornsilk;
+}
+.drivingLicenseInputContainer{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
 }
