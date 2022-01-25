@@ -1,0 +1,51 @@
+html{
+    font-family: 'Saira Condensed';
+}
+
+body{
+    margin:0;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(233, 217, 197);
+}
+h1{
+    font-family: 'Abril Fatface';
+    font-size: 3rem;
+    text-align: center;
+}
+/* main */
+main{
+    flex-basis: 100vw;
+}
+/* nav */
+nav{margin-top: 32.160px;
+    padding: 0 2vw;
+    font-size: 1.5rem;
+    
+}
+
+/* visibility */
+.visible{
+    visibility: visible;
+}
+
+/* user */
+.user{
+    margin: auto;
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+}
+
+/* btnSection */
+.btnSection{
+    margin: auto;
+    padding: 2vw;
+}
+button{
+    border-radius: 5px;
+    font-size: 1rem;
+}
+button:hover{
+    background-color: cadetblue;
+}
