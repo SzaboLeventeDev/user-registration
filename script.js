@@ -8,6 +8,8 @@ var genderFemale = document.getElementById("genderFemale");
 /* button declarations */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserbtn = document.getElementById("cancelUserRegistrationBtn");
+var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
+
 var userArray = [];
 //People object
 function People(firstName, lastName, birthDate, /* year, month, day, */ gender, id){
@@ -67,14 +69,19 @@ saveUserBtn.addEventListener("click", function(){
     /* check the age to choose the  matching object*/
     console.log(birthDay.value);//line for test
     var tempAge = checkAge(birthDay);
-    let uId = generateUserId();
+    let uId = generateUserId(5,5);
+    let user;
     if (tempAge >= 18 && userArray.indexOf(Object.id) != uId) {
         console.log(">=18 true");//line for test
-        userArray.push(new People(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId));
+        user = new People(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
+        userArray.push(user);
+        $("ul").append(`<li>${user.fullName()}</li>`);
     }
     else if(tempAge  < 18 && tempAge >= 16 && userArray.indexOf(Object.id) != uId){
         console.log(" >= 16 && <18 true");//line for test
-        userArray.push(new Young(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), generateUserId()));
+        user = new Young(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
+        userArray.push(user);
+        $("ul").append(`<li>${user.fullName()}</li>`);
     }
     else{
         alert("The person is too young for registrate.")
@@ -132,13 +139,16 @@ function generateRandomNumber(number){
     return idNum;
     
 }
-function generateUserId() {
-    return generateRandomString(5) + generateRandomNumber(5)
+function generateUserId(stCharNumber, numCharNumber) {
+    return generateRandomString(stCharNumber) + generateRandomNumber(numCharNumber)
 }
-
+/* MENU - driving license */
+drivingLicenseBtn.addEventListener("click", function(){
+    userListForDrivingLicense();
+})
 /* list of users for generating driving license */
 function userListForDrivingLicense(){
-    userArray.forEach(function(){
-        
+    userArray.forEach(function(val){
+        $("ul").append(`<li>${val.fullName()}</li>`);
     })
 }
