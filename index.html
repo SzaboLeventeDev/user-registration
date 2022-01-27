@@ -42,7 +42,7 @@
         <!-- div for create driving license -->
         <div class="drivingLicenseSection">
                 <!-- list of registered users -->
-                <ul>
+                <ul id="listForDrivingLicense">
                     <!-- <li>test</li>
                     <li>test</li>
                     <li>test</li>
@@ -51,6 +51,8 @@
             <!-- create driving license for the selected user -->
             <div class="drivingLicenseInputContainer">
                 <!--  personal info-->
+                <label for="idOfUser">ID number of the user</label>
+                <input type="text" name="idOfUser" id="idOfUser">
                 <label for="nameOfDriver">Name</label>
                 <input type="text" name="nameOfDriver" id="nameOfDriver" readonly>
                 <div>

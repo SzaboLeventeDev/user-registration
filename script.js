@@ -10,6 +10,10 @@ var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserbtn = document.getElementById("cancelUserRegistrationBtn");
 var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
 
+/* list declarations */
+var drivingLicenseUserList = document.getElementById("listForDrivingLicense");//I am not sure I need this
+var drivingLicUserList = document.querySelectorAll("li");
+
 var userArray = [];
 //People object
 function People(firstName, lastName, birthDate, /* year, month, day, */ gender, id){
@@ -75,13 +79,13 @@ saveUserBtn.addEventListener("click", function(){
         console.log(">=18 true");//line for test
         user = new People(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
         userArray.push(user);
-        $("ul").append(`<li>${user.fullName()}</li>`);
+        
     }
     else if(tempAge  < 18 && tempAge >= 16 && userArray.indexOf(Object.id) != uId){
         console.log(" >= 16 && <18 true");//line for test
         user = new Young(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
         userArray.push(user);
-        $("ul").append(`<li>${user.fullName()}</li>`);
+        
     }
     else{
         alert("The person is too young for registrate.")
@@ -145,10 +149,39 @@ function generateUserId(stCharNumber, numCharNumber) {
 /* MENU - driving license */
 drivingLicenseBtn.addEventListener("click", function(){
     userListForDrivingLicense();
+    clickUser();
 })
 /* list of users for generating driving license */
 function userListForDrivingLicense(){
     userArray.forEach(function(val){
-        $("ul").append(`<li>${val.fullName()}</li>`);
+        $("ul").append(`<li>${val.fullName()}</li>`);   
     })
+
+
+    
 }
+    /* click to the selected user for create driving license */
+function clickUser(){
+        console.log("clickUser is invoking now")
+        for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) {
+            /* drivingLicUserList[indxOfUser].addEventListener("click", function(){
+            console.log("clicked user: " + drivingLicUserList[indxOfUser])
+            }) */
+        
+            drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){
+                console.log("this.innerHTML");//line for test
+                
+                if (drivingLicenseUserList.children.length == -1) {
+                    alert("Please add users or load the userlist!");
+                }
+                else{
+                    console.log(drivingLicenseUserList.children[0].innerHTML);//line for test
+                }
+            }) 
+            /* drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){console.log("click")}) */
+            }
+}
+
+$(document).ready(function(){
+    clickUser()
+})
