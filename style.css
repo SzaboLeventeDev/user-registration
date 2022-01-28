@@ -82,3 +82,7 @@ li:nth-child{
     flex-direction: column;
     padding: 10px;
 }
+
+.userInfo{
+    /* visibility: hidden; */
+}

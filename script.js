@@ -1,18 +1,28 @@
 /* declarations */
 var firstNameText = document.getElementById("firstName");
 var lastNameText = document.getElementById("lastName");
+var fullNameText = document.getElementById("nameOfDriver");
 var birthDay = document.getElementById("dateOfBirth");
+var birthDayDL = document.getElementById("dateOfBirthDL");
 var genderVal = document.getElementById("gender");
 var genderMale = document.getElementById("genderMale");
 var genderFemale = document.getElementById("genderFemale");
+var userIdText = document.getElementById("idOfUser");
+var ageText = document.getElementById("ageOfDriver");
+var ageGroup = document.getElementById("ageGroup");
+var selectedUser;
+/* div declarations */
+var userInfoDiv = document.getElementById("userInfoContainer");
+
 /* button declarations */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
-var cancelUserbtn = document.getElementById("cancelUserRegistrationBtn");
+var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
 var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
+var submitBtn = document.getElementById("submitDrivingLicenseBtn");
 
 /* list declarations */
 var drivingLicenseUserList = document.getElementById("listForDrivingLicense");//I am not sure I need this
-var drivingLicUserList = document.querySelectorAll("li");
+
 
 var userArray = [];
 //People object
@@ -34,7 +44,10 @@ People.prototype.fullName = function(){
     return this.firstName + " " + this.lastName;
 }
 People.prototype.age = ""   //need solution, checkAge() causes error here
-//student object
+People.prototype.ageCategory = function(){
+    checkAge()
+}
+//Young object
 
 function Young(studId){
     People.apply(this, arguments);
@@ -44,28 +57,37 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense(){
+function DrivingLicense (id, category){
     People.apply(this, arguments);
-    Student.apply(this, arguments);
+    Young.apply(this, arguments);
+    this.id = id;
+    this.category = category;
+}
+DrivingLicense.prototype.dateOfIssue = function(){
+    /* date of issue */
 }
 
 //Vehicle object
-function Vehicle(brand, model, dateOfProduct, dateOfCommission, vin, registrationNumber){
+function Vehicle(brand, model, dateOfProduct, dateOfCommission, vin, registrationNumber, weight, category){
     this.brand = brand;
     this.model = model;
     this.dateOfProduct = dateOfProduct;
     this.dateOfCommission = dateOfCommission;
     this.vin = vin;
     this.registrationNumber = registrationNumber;
+    this.weight = weight;
+    this.category = category;
 }
 
+/* inherited object types */
 function Car(){
     Vehicle.apply(this, arguments);
-    this.category= "test"
 }
 function Motorcycle(){
     Vehicle.apply(this, arguments);
-    this.category = "test2";
+}
+function Truck(category){
+    Vehicle.apply(this, arguments);
 }
 
 /* save user */
@@ -90,10 +112,15 @@ saveUserBtn.addEventListener("click", function(){
     else{
         alert("The person is too young for registrate.")
     }
+    emptyUserRegistrationField();
 })
 
-
-
+/* empty the input fields */
+function emptyUserRegistrationField(){
+    firstNameText.value ="";
+    lastNameText.value = "";
+    birthDay.value = "";
+}
 /* check age of the person */
 function checkAge(date){
     var currentDate = new Date();
@@ -146,6 +173,21 @@ function generateRandomNumber(number){
 function generateUserId(stCharNumber, numCharNumber) {
     return generateRandomString(stCharNumber) + generateRandomNumber(numCharNumber)
 }
+
+/* add back the current date */
+function currentDate(){
+    let date = new Date();
+    let year;
+    let month;
+    let day;
+    
+    console.log(date);
+    for (let indexOfSpace = 0; indexOfSpace < array.length; indexOfSpace++) {
+        
+        
+    }
+    
+}
 /* MENU - driving license */
 drivingLicenseBtn.addEventListener("click", function(){
     userListForDrivingLicense();
@@ -160,28 +202,56 @@ function userListForDrivingLicense(){
 
     
 }
-    /* click to the selected user for create driving license */
+/* click to the selected user for create driving license */
 function clickUser(){
-        console.log("clickUser is invoking now")
-        for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) {
-            /* drivingLicUserList[indxOfUser].addEventListener("click", function(){
-            console.log("clicked user: " + drivingLicUserList[indxOfUser])
-            }) */
-        
-            drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){
-                console.log("this.innerHTML");//line for test
-                
-                if (drivingLicenseUserList.children.length == -1) {
-                    alert("Please add users or load the userlist!");
-                }
-                else{
-                    console.log(drivingLicenseUserList.children[0].innerHTML);//line for test
-                }
-            }) 
-            /* drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){console.log("click")}) */
+    console.log("clickUser is invoking now")
+    for (var indxOfUser = 0;  indxOfUser < userArray.length-1;  indxOfUser++) { 
+        console.log(indxOfUser);//line for test     
+        drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){
+            console.log("this.innerHTML" + indxOfUser);//line for test
+            if (drivingLicenseUserList.children.length == -1) { //not sure if it is necessary
+                alert("Please add users or load the userlist!");
             }
+            else{
+                console.log(drivingLicenseUserList.children[0].innerHTML);//line for test
+                $("userIdText").attr("placeholder","Please add the chars of the selected people's ID");
+                selectedUser = drivingLicenseUserList.children[0].innerHTML;
+            }
+        }) 
+    }
+    console.log("clickuser is finishing");
 }
 
+/* check the user ID number */
+submitBtn.addEventListener("click", function(){
+    console.log("sikeers kattintás");
+    checkUserId();
+})
+function checkUserId(){
+    
+  for (let i = 0; i < userArray.length-1;i++) {
+    if(userIdText.value == userArray[i].id && selectedUser == userArray[i].fullName()){   //need to corrigate the statement, lowercased or not?
+        //true
+        fullNameText.innerText = userArray[i].fullName;
+        birthDayDL.innerText = userArray[i].birthDate;
+        ageText.innerText = userArray[i].age;   //need to finish the proto
+        ageGroup.innerText= userArray[i].ageCategory;   //need to finish the proto
+        //toogle with animation
+        userInfoDiv.style.display = "block"
+        //change the value of submit 
+        submitBtn.value = "Save";
+        break;
+    }
+    else{
+        //false
+        alert("Check the user ID or the user, something is wrong!")
+    } 
+      
+  }
+      
+}
+
+/* ready */
 $(document).ready(function(){
-    clickUser()
+    clickUser();
 })

@@ -53,30 +53,31 @@
                 <!--  personal info-->
                 <label for="idOfUser">ID number of the user</label>
                 <input type="text" name="idOfUser" id="idOfUser">
-                <label for="nameOfDriver">Name</label>
-                <input type="text" name="nameOfDriver" id="nameOfDriver" readonly>
-                <div>
-                    <label for="dateOfBirth">Date of birth</label>
-                    <input type="text" name="dateOfBirth" id="dateOfBirth">
-                    <label for="ageOfDriver">Age</label>
-                    <input type="text" name="ageOfDriver" id="ageOfDriver">
+                <div class="userInfo" id="userInfoContainer">
+                    <label for="nameOfDriver">Name</label>
+                    <input type="text" name="nameOfDriver" id="nameOfDriver" readonly>
+                    <div>
+                        <label for="dateOfBirth">Date of birth</label>
+                        <input type="text" name="dateOfBirth" id="dateOfBirthDL" readonly>
+                        <label for="ageOfDriver">Age</label>
+                        <input type="text" name="ageOfDriver" id="ageOfDriver" readonly>
+                    </div>
+                    <label for="ageGroup">Age group</label>
+                    <input type="text" name="ageGroup" id="ageGroup" readonly>
+                    <!-- params for the license -->
+                    <label for="testResult">Result of test</label>
+                    <input type="number" name="" id="" min="0" max="100">
+                    <label for="resultOfDrive">Result of driving</label>
+                    <input type="number" name="" id="" min="0" max="100">
+                    <label for="firstAidTest">Result of First Aid</label>
+                    <input type="number" name="" id="" min="0" max="100">
+                    <!-- generated ID for the license -->
+                    <label for="drivingLicenseIdNumber">ID number</label>
+                    <input type="text" name="drivingLicenseIdNumber" id="drivingLicenseIdNumber" readonly>
                 </div>
-                
-                <label for="ageGroup">Age group</label>
-                <input type="text" name="ageGroup" id="ageGroup" readonly>
-                <!-- params for the license -->
-                <label for="testResult">Result of test</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <label for="resultOfDrive">Result of driving</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <label for="firstAidTest">Result of First Aid</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <!-- generated ID for the license -->
-                <label for="drivingLicenseIdNumber">ID number</label>
-                <input type="text" name="drivingLicenseIdNumber" id="drivingLicenseIdNumber" readonly>
                 <div class="btnSection">
-                    <input type="reset" value="Cancel">
-                    <input type="submit" value="Save">
+                    <button>Cancel</button>
+                    <button id="submitDrivingLicenseBtn">Check</button>
                 </div>
             </div>
         </div>
