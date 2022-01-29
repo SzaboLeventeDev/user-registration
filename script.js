@@ -195,10 +195,11 @@ drivingLicenseBtn.addEventListener("click", function(){
 })
 /* list of users for generating driving license */
 function userListForDrivingLicense(){
+    console.log("users will be adding to the list");//line for test
     userArray.forEach(function(val){
         $("ul").append(`<li>${val.fullName()}</li>`);   
     })
-
+    console.log("users added sucessfully");//line for test
 
     
 }
@@ -213,7 +214,7 @@ function clickUser(){
                 alert("Please add users or load the userlist!");
             }
             else{
-                console.log(drivingLicenseUserList.children[0].innerHTML);//line for test
+                console.log(drivingLicenseUserList.children[indxOfUser].innerHTML);//line for test
                 $("userIdText").attr("placeholder","Please add the chars of the selected people's ID");
                 selectedUser = drivingLicenseUserList.children[0].innerHTML;
             }
@@ -253,5 +254,5 @@ function checkUserId(){
 
 /* ready */
 $(document).ready(function(){
-    clickUser();
+    /* clickUser(); */
 })
