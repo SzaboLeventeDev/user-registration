@@ -43,9 +43,14 @@ People.prototype.date = function(){
 People.prototype.fullName = function(){
     return this.firstName + " " + this.lastName;
 }
-People.prototype.age = ""   //need solution, checkAge() causes error here
+People.prototype.age = checkAge(birthDay);   //need solution, checkAge() causes error here
 People.prototype.ageCategory = function(){
-    checkAge()
+    if(checkAge(birthDay) >= 18){
+        return "adult";
+    }
+    else if(checkAge(birthDay < 18 && checkAge(birthDay) >= 16)){
+        return "young";
+    }
 }
 //Young object
 
@@ -130,7 +135,7 @@ function checkAge(date){
     var cDate = new Date(cYear, cMonth, cDay);
     
 
-    var personDate = date.value
+    var personDate = date.value;
     var pYear = personDate.substr(0,4);
     var pMonth = personDate.substr(5,2);
     var pDay = personDate.substr(8);
@@ -229,15 +234,15 @@ submitBtn.addEventListener("click", function(){
 })
 function checkUserId(){
     
-  for (let i = 0; i < userArray.length-1;i++) {
+  for (let i = 0; i < userArray.length;i++) {
     if(userIdText.value == userArray[i].id && selectedUser == userArray[i].fullName()){   //need to corrigate the statement, lowercased or not?
         //true
-        fullNameText.innerText = userArray[i].fullName;
-        birthDayDL.innerText = userArray[i].birthDate;
-        ageText.innerText = userArray[i].age;   //need to finish the proto
-        ageGroup.innerText= userArray[i].ageCategory;   //need to finish the proto
+        fullNameText.value = userArray[i].fullName();
+        birthDayDL.value = userArray[i].birthDate;
+        //ageText.innerText = userArray[i].age();   //need to finish the proto
+        ageGroup.value= userArray[i].ageCategory();   //need to finish the proto
         //toogle with animation
-        userInfoDiv.style.display = "block"
+        //userInfoDiv.style.display = "block"
         //change the value of submit 
         submitBtn.value = "Save";
         break;
