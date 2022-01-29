@@ -205,22 +205,21 @@ function userListForDrivingLicense(){
 }
 /* click to the selected user for create driving license */
 function clickUser(){
-    console.log("clickUser is invoking now")
-    for (var indxOfUser = 0;  indxOfUser < userArray.length-1;  indxOfUser++) { 
-        console.log(indxOfUser);//line for test     
+    console.log("clickUser is invoking now")//line for test
+    for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) { 
+        /* console.log(indxOfUser);//line for test    */  
         drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){
             console.log("this.innerHTML" + indxOfUser);//line for test
             if (drivingLicenseUserList.children.length == -1) { //not sure if it is necessary
                 alert("Please add users or load the userlist!");
             }
-            else{
-                console.log(drivingLicenseUserList.children[indxOfUser].innerHTML);//line for test
-                $("userIdText").attr("placeholder","Please add the chars of the selected people's ID");
-                selectedUser = drivingLicenseUserList.children[0].innerHTML;
+            else{ 
+                selectedUser = this.innerHTML;
+                console.log(selectedUser);//line for test
             }
         }) 
     }
-    console.log("clickuser is finishing");
+    console.log("clickuser is finishing");//line for test
 }
 
 /* check the user ID number */
@@ -254,5 +253,5 @@ function checkUserId(){
 
 /* ready */
 $(document).ready(function(){
-    /* clickUser(); */
+
 })
