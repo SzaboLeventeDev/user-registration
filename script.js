@@ -11,6 +11,22 @@ var userIdText = document.getElementById("idOfUser");
 var ageText = document.getElementById("ageOfDriver");
 var ageGroup = document.getElementById("ageGroup");
 var selectedUser;
+
+/* array declarations */
+var monthDictionary = [{
+    "Jan": "01",
+    "Feb": "02",
+    "Mar": "03",
+    "Apr": "04",
+    "May": "05",
+    "Jun": "06",
+    "Jul": "07",
+    "Aug": "08",
+    "Sep": "09",
+    "Oct": "10",
+    "Nov": "11",
+    "Dec": "12"
+}
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
@@ -43,8 +59,14 @@ People.prototype.date = function(){
 People.prototype.fullName = function(){
     return this.firstName + " " + this.lastName;
 }
-People.prototype.age = checkAge(birthDay);   //need solution, checkAge() causes error here
+People.prototype.age = function(){
+    console.log("proto.age invokes")// line for test
+    if(birthDay.value != ""){
+        return checkAge(this.birthDate); //need to add date for param in this format yyyy-mm-dd
+    }
+} 
 People.prototype.ageCategory = function(){
+    console.log("proto.ageCategory invokes")// line for test
     if(checkAge(birthDay) >= 18){
         return "adult";
     }
@@ -62,14 +84,17 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense (id, category){
+function DrivingLicense (drivLicId, category){
     People.apply(this, arguments);
     Young.apply(this, arguments);
-    this.id = id;
+    this.drivLicId = drivLicId;
     this.category = category;
 }
-DrivingLicense.prototype.dateOfIssue = function(){
-    /* date of issue */
+/* date of issue */
+DrivingLicense.prototype.dateOfIssue = currentDate();
+
+DrivingLicense.prototype.expirationDate = function(){
+    //expiration date depending on ageCat 
 }
 
 //Vehicle object
@@ -100,7 +125,7 @@ saveUserBtn.addEventListener("click", function(){
     /* check the age to choose the  matching object*/
     console.log(birthDay.value);//line for test
     var tempAge = checkAge(birthDay);
-    let uId = generateUserId(5,5);
+    let uId = generateSpecificId(5,5);
     let user;
     if (tempAge >= 18 && userArray.indexOf(Object.id) != uId) {
         console.log(">=18 true");//line for test
@@ -141,7 +166,7 @@ function checkAge(date){
     var pDay = personDate.substr(8);
     var pDate = new Date(pYear, pMonth, pDay);
 
-    return new Date(cDate.getTime() - pDate.getTime()).getUTCFullYear()- 1970; //console.log not necessary, just the value
+    return new Date(cDate.getTime() - pDate.getTime()).getUTCFullYear()- 1970; 
     
 }
 /* check the gender of the user */
@@ -175,7 +200,7 @@ function generateRandomNumber(number){
     return idNum;
     
 }
-function generateUserId(stCharNumber, numCharNumber) {
+function generateSpecificId(stCharNumber, numCharNumber) {
     return generateRandomString(stCharNumber) + generateRandomNumber(numCharNumber)
 }
 
@@ -187,16 +212,25 @@ function currentDate(){
     let day;
     
     console.log(date);
-    for (let indexOfSpace = 0; indexOfSpace < array.length; indexOfSpace++) {
+    /* for (let indexOfSpace = 0; indexOfSpace < array.length; indexOfSpace++) {
         
         
-    }
+    } */
     
 }
 /* MENU - driving license */
 drivingLicenseBtn.addEventListener("click", function(){
-    userListForDrivingLicense();
-    clickUser();
+    //check if the ul has children element or not
+    if(drivingLicenseUserList.children.length != 0){
+        $(drivingLicenseUserList).empty();
+        userListForDrivingLicense();
+        clickUser();
+    }
+    else{
+        userListForDrivingLicense();
+        clickUser();
+    }
+    
 })
 /* list of users for generating driving license */
 function userListForDrivingLicense(){
@@ -239,12 +273,12 @@ function checkUserId(){
         //true
         fullNameText.value = userArray[i].fullName();
         birthDayDL.value = userArray[i].birthDate;
-        //ageText.innerText = userArray[i].age();   //need to finish the proto
+        ageText.value = userArray[i].age();   //need to finish the proto
         ageGroup.value= userArray[i].ageCategory();   //need to finish the proto
         //toogle with animation
         //userInfoDiv.style.display = "block"
         //change the value of submit 
-        submitBtn.value = "Save";
+        submitBtn.setAttribute("value", "Save");
         break;
     }
     else{
@@ -256,6 +290,13 @@ function checkUserId(){
       
 }
 
+/* Save the driving license */
+
+submitBtn.addEventListener("click", function(){
+    let drivingLic;
+    drivingLic = new DrivingLicense(generateSpecificId(3,8), "category", this.firstName, this.lastName, this.id);
+    drivingLicArray.push(drivingLic);
+})
 /* ready */
 $(document).ready(function(){
 
