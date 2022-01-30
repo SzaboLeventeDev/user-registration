@@ -10,10 +10,14 @@ var genderFemale = document.getElementById("genderFemale");
 var userIdText = document.getElementById("idOfUser");
 var ageText = document.getElementById("ageOfDriver");
 var ageGroup = document.getElementById("ageGroup");
+var drivingLicCategoryList = document.getElementById("drivingLicenseCategoryList");
 var selectedUser;
+var selectedUserObject;
 
 /* array declarations */
-var monthDictionary = [{
+var userArray = [];
+var drivingLicArray = [];
+var monthDictionary = { //maybe it is not necessary
     "Jan": "01",
     "Feb": "02",
     "Mar": "03",
@@ -26,7 +30,8 @@ var monthDictionary = [{
     "Oct": "10",
     "Nov": "11",
     "Dec": "12"
-}
+};
+var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"]
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
@@ -35,12 +40,12 @@ var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
 var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
 var submitBtn = document.getElementById("submitDrivingLicenseBtn");
-
+var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
 /* list declarations */
 var drivingLicenseUserList = document.getElementById("listForDrivingLicense");//I am not sure I need this
 
 
-var userArray = [];
+
 //People object
 function People(firstName, lastName, birthDate, /* year, month, day, */ gender, id){
     this.firstName = firstName;
@@ -85,10 +90,10 @@ Young.prototype.constructor = Young;
 
 //driving license object
 function DrivingLicense (drivLicId, category){
-    People.apply(this, arguments);
-    Young.apply(this, arguments);
     this.drivLicId = drivLicId;
     this.category = category;
+    People.apply(this, arguments);
+    Young.apply(this, arguments);
 }
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
@@ -206,17 +211,19 @@ function generateSpecificId(stCharNumber, numCharNumber) {
 
 /* add back the current date */
 function currentDate(){
-    let date = new Date();
-    let year;
-    let month;
-    let day;
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth()+1;
+    dt = date.getDate();
     
-    console.log(date);
-    /* for (let indexOfSpace = 0; indexOfSpace < array.length; indexOfSpace++) {
-        
-        
-    } */
+    if (dt < 10) {
+      dt = '0' + dt;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
     
+    return year+'-' + month + '-'+dt;
 }
 /* MENU - driving license */
 drivingLicenseBtn.addEventListener("click", function(){
@@ -265,12 +272,15 @@ function clickUser(){
 submitBtn.addEventListener("click", function(){
     console.log("sikeers kattintás");
     checkUserId();
+    loadDrivingLicenseCategory();
 })
 function checkUserId(){
     
   for (let i = 0; i < userArray.length;i++) {
     if(userIdText.value == userArray[i].id && selectedUser == userArray[i].fullName()){   //need to corrigate the statement, lowercased or not?
         //true
+        //new feature - need to add selectedUserObject
+        selectedUserObject = userArray[i];   
         fullNameText.value = userArray[i].fullName();
         birthDayDL.value = userArray[i].birthDate;
         ageText.value = userArray[i].age();   //need to finish the proto
@@ -289,14 +299,23 @@ function checkUserId(){
   }
       
 }
-
+/* Load driving license category */
+function loadDrivingLicenseCategory(){
+    driveableCategory.forEach(function(val){
+        $(drivingLicCategoryList).append(`<option>${val}</option>`);
+    })
+}
 /* Save the driving license */
 
-submitBtn.addEventListener("click", function(){
+saveDrivingLicenseBtn.addEventListener("click", function(){
     let drivingLic;
-    drivingLic = new DrivingLicense(generateSpecificId(3,8), "category", this.firstName, this.lastName, this.id);
-    drivingLicArray.push(drivingLic);
+    drivingLic = new DrivingLicense(generateSpecificId(3,8), selectedUserObject.lastName, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.id );
+    drivingLicArray.push(drivingLic)
 })
+
+function checkTestResults(){
+
+}
 /* ready */
 $(document).ready(function(){
 

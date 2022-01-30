@@ -71,6 +71,11 @@
                     <input type="number" name="" id="" min="0" max="100">
                     <label for="firstAidTest">Result of First Aid</label>
                     <input type="number" name="" id="" min="0" max="100">
+                    <!-- select the license category -->
+                    <label for="drivingLicenseCategoryList">Driving license category</label>
+                    <select name="drivingLicenseCategoryList" id="drivingLicenseCategoryList">
+                        <option value="default">Select category!</option>
+                    </select>
                     <!-- generated ID for the license -->
                     <label for="drivingLicenseIdNumber">ID number</label>
                     <input type="text" name="drivingLicenseIdNumber" id="drivingLicenseIdNumber" readonly>
@@ -78,6 +83,7 @@
                 <div class="btnSection">
                     <button>Cancel</button>
                     <button id="submitDrivingLicenseBtn">Check</button>
+                    <button id="saveDrivingLicenseBtn">Save</button>
                 </div>
             </div>
         </div>
