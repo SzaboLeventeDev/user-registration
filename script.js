@@ -360,7 +360,6 @@ saveDrivingLicenseBtn.addEventListener("click", function(){
 })
 
 function checkTestResults(arr){
-    console.log(arr.drivingTest)
     if (arr.drivingTest > drivingResult.value || arr.trafficEducationTest > TestResult || arr.firstAidTest > firstAidResult.value) {
         alert("The result of the tests are not enough.")
         return false
