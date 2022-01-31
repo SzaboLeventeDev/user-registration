@@ -42,39 +42,48 @@
         <!-- div for create driving license -->
         <div class="drivingLicenseSection">
                 <!-- list of registered users -->
-                <ul>
+                <ul id="listForDrivingLicense">
+                    <!-- <li>test</li>
                     <li>test</li>
                     <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
+                    <li>test</li> -->
                 </ul>
             <!-- create driving license for the selected user -->
             <div class="drivingLicenseInputContainer">
                 <!--  personal info-->
-                <label for="nameOfDriver">Name</label>
-                <input type="text" name="nameOfDriver" id="nameOfDriver" readonly>
-                <div>
-                    <label for="dateOfBirth">Date of birth</label>
-                    <input type="text" name="dateOfBirth" id="dateOfBirth">
-                    <label for="ageOfDriver">Age</label>
-                    <input type="text" name="ageOfDriver" id="ageOfDriver">
+                <label for="idOfUser">ID number of the user</label>
+                <input type="text" name="idOfUser" id="idOfUser">
+                <div class="userInfo" id="userInfoContainer">
+                    <label for="nameOfDriver">Name</label>
+                    <input type="text" name="nameOfDriver" id="nameOfDriver" readonly>
+                    <div>
+                        <label for="dateOfBirth">Date of birth</label>
+                        <input type="text" name="dateOfBirth" id="dateOfBirthDL" readonly>
+                        <label for="ageOfDriver">Age</label>
+                        <input type="text" name="ageOfDriver" id="ageOfDriver" readonly>
+                    </div>
+                    <label for="ageGroup">Age group</label>
+                    <input type="text" name="ageGroup" id="ageGroup" readonly>
+                    <!-- params for the license -->
+                    <label for="testResult">Result of test</label>
+                    <input type="number" name="testResult" id="testResult" min="0" max="100">
+                    <label for="drivingResult">Result of driving</label>
+                    <input type="number" name="drivingResult" id="drivingResult" min="0" max="100">
+                    <label for="firstAidResult">Result of First Aid</label>
+                    <input type="number" name="firstAidResult" id="firstAidResult" min="0" max="100">
+                    <!-- select the license category -->
+                    <label for="drivingLicenseCategoryList">Driving license category</label>
+                    <select name="drivingLicenseCategoryList" id="drivingLicenseCategoryList">
+                        <option value="default" selected disabled hidden>Select category!</option>
+                    </select>
+                    <!-- generated ID for the license -->
+                    <label for="drivingLicenseIdNumber">ID number</label>
+                    <input type="text" name="drivingLicenseIdNumber" id="drivingLicenseIdNumber" readonly>
                 </div>
-                
-                <label for="ageGroup">Age group</label>
-                <input type="text" name="ageGroup" id="ageGroup" readonly>
-                <!-- params for the license -->
-                <label for="testResult">Result of test</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <label for="resultOfDrive">Result of driving</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <label for="firstAidTest">Result of First Aid</label>
-                <input type="number" name="" id="" min="0" max="100">
-                <!-- generated ID for the license -->
-                <label for="drivingLicenseIdNumber">ID number</label>
-                <input type="text" name="drivingLicenseIdNumber" id="drivingLicenseIdNumber" readonly>
                 <div class="btnSection">
-                    <input type="reset" value="Cancel">
-                    <input type="submit" value="Save">
+                    <button>Cancel</button>
+                    <button id="submitDrivingLicenseBtn">Check</button>
+                    <button id="saveDrivingLicenseBtn">Save</button>
                 </div>
             </div>
         </div>
@@ -84,10 +93,10 @@
         <i class="fa-duotone fa-bars"></i>
         <h2>main page</h2>
         <h2>user</h2>
-        <h2>driving license</h2>
+        <h2 id="drivingLicenseMenuBtn">driving license</h2>
         <h2>traffic license</h2>
     </nav>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
