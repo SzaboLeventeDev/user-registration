@@ -93,11 +93,22 @@ function DrivingLicense (drivLicId, category){
     this.drivLicId = drivLicId;
     this.category = category;
     People.apply(this, arguments);
-    Young.apply(this, arguments);
+    /* Young.apply(this, arguments); */
+    
 }
-DrivingLicense.prototype = Object.create(People.prototype);
-DrivingLicense.prototype = Object.create(Young.prototype);
-DrivingLicense.prototype.constructor = DrivingLicense;
+
+/* prototype for DrivingLicense choosing the appropriate inheritance */
+if(this.age >= 18){
+    console.log("DL proto from People");//line for test
+    DrivingLicense.prototype = Object.create(People.prototype);
+    DrivingLicense.prototype.constructor = DrivingLicense;
+}
+else if(this.age <18 && this.age <= 16){
+    console.log("DL proto from Young");//line for test
+    DrivingLicense.prototype = Object.create(Young.prototype);
+    DrivingLicense.prototype.constructor = DrivingLicense;
+
+}
 
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
@@ -313,7 +324,7 @@ function loadDrivingLicenseCategory(){
 
 saveDrivingLicenseBtn.addEventListener("click", function(){
     let drivingLic;
-    drivingLic = new DrivingLicense(generateSpecificId(3,8), drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.firstName, selectedUserObject.gender, selectedUserObject.id, selectedUserObject.lastName  );
+    drivingLic = new DrivingLicense(generateSpecificId(3,8), selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
     drivingLicArray.push(drivingLic)
 })
 
