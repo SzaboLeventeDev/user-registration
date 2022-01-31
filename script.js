@@ -38,6 +38,11 @@ var monthDictionary = { //maybe it is not necessary
     "Nov": "11",
     "Dec": "12"
 };
+var minResultForTest = {
+    "drivingTest": 90,
+    "trafficEducationTest": 95,
+    "firstAidTest": 90
+};
 var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"]
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
@@ -345,13 +350,22 @@ function emptyDrivingLicenseInputFields(){
 
 saveDrivingLicenseBtn.addEventListener("click", function(){
     let drivingLic;
-    drivingLic = new DrivingLicense(drivingLicenseIdText.value, selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
-    drivingLicArray.push(drivingLic)
-    emptyDrivingLicenseInputFields();
+    /* check the result of the test */
+    if (checkTestResults(minResultForTest) == true) {
+        //need to add the test results too.
+        drivingLic = new DrivingLicense(drivingLicenseIdText.value, selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
+        drivingLicArray.push(drivingLic);
+        emptyDrivingLicenseInputFields();
+    };
 })
 
-function checkTestResults(){
-
+function checkTestResults(arr){
+    console.log(arr.drivingTest)
+    if (arr.drivingTest > drivingResult.value || arr.trafficEducationTest > TestResult || arr.firstAidTest > firstAidResult.value) {
+        alert("The result of the tests are not enough.")
+        return false
+    }
+    return true
 }
 /* ready */
 $(document).ready(function(){
