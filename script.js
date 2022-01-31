@@ -1,18 +1,25 @@
 /* declarations */
-var firstNameText = document.getElementById("firstName");
-var lastNameText = document.getElementById("lastName");
-var fullNameText = document.getElementById("nameOfDriver");
+var firstNameTextUR = document.getElementById("firstName");
+var lastNameTextUR = document.getElementById("lastName");
+var fullNameTextDL = document.getElementById("nameOfDriver");
 var birthDay = document.getElementById("dateOfBirth");
 var birthDayDL = document.getElementById("dateOfBirthDL");
 var genderVal = document.getElementById("gender");
 var genderMale = document.getElementById("genderMale");
 var genderFemale = document.getElementById("genderFemale");
 var userIdText = document.getElementById("idOfUser");
-var ageText = document.getElementById("ageOfDriver");
-var ageGroup = document.getElementById("ageGroup");
+var ageTextDL = document.getElementById("ageOfDriver");
+var ageGroupDL = document.getElementById("ageGroup");
 var drivingLicCategoryList = document.getElementById("drivingLicenseCategoryList");
+var TestResult = document.getElementById("testResult");
+var drivingResult = document.getElementById("drivingResult");
+var firstAidResult = document.getElementById("firstAidResult");
+var drivingLicenseIdText = document.getElementById("drivingLicenseIdNumber");
 var selectedUser;
 var selectedUserObject;
+var year;
+var month;
+var dt;
 
 /* array declarations */
 var userArray = [];
@@ -115,6 +122,19 @@ DrivingLicense.prototype.dateOfIssue = currentDate();
 
 DrivingLicense.prototype.expirationDate = function(){
     //expiration date depending on ageCat 
+    return year+4 + "-" + month + "-"+ dt;
+    /* console.log((date+4) + "-" + month +"-" + dt) */
+    //under 18 license is valid for 2 years
+
+    //between 18 and 40 is 6 years
+
+    //between 40 and 50 is 4 years
+
+    //between 50 and 60 is  3 years
+
+    //between 60 and 65 is 2 years
+
+    //between 65 and 70 is 1 years with plus conditions if they are true.
 }
 
 //Vehicle object
@@ -149,13 +169,13 @@ saveUserBtn.addEventListener("click", function(){
     let user;
     if (tempAge >= 18 && userArray.indexOf(Object.id) != uId) {
         console.log(">=18 true");//line for test
-        user = new People(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
+        user = new People(firstNameTextUR.value, lastNameTextUR.value, birthDay.value, checkGender(), uId)
         userArray.push(user);
         
     }
     else if(tempAge  < 18 && tempAge >= 16 && userArray.indexOf(Object.id) != uId){
         console.log(" >= 16 && <18 true");//line for test
-        user = new Young(firstNameText.value, lastNameText.value, birthDay.value, checkGender(), uId)
+        user = new Young(firstNameTextUR.value, lastNameTextUR.value, birthDay.value, checkGender(), uId)
         userArray.push(user);
         
     }
@@ -167,8 +187,8 @@ saveUserBtn.addEventListener("click", function(){
 
 /* empty the input fields */
 function emptyUserRegistrationField(){
-    firstNameText.value ="";
-    lastNameText.value = "";
+    firstNameTextUR.value ="";
+    lastNameTextUR.value = "";
     birthDay.value = "";
 }
 /* check age of the person */
@@ -267,14 +287,13 @@ function userListForDrivingLicense(){
 /* click to the selected user for create driving license */
 function clickUser(){
     console.log("clickUser is invoking now")//line for test
-    for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) { 
-        /* console.log(indxOfUser);//line for test    */  
-        drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){
-            console.log("this.innerHTML" + indxOfUser);//line for test
+    for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) {  
+        drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){            
             if (drivingLicenseUserList.children.length == -1) { //not sure if it is necessary
                 alert("Please add users or load the userlist!");
             }
             else{ 
+                emptyDrivingLicenseInputFields();
                 selectedUser = this.innerHTML;
                 console.log(selectedUser);//line for test
             }
@@ -296,10 +315,11 @@ function checkUserId(){
         //true
         //new feature - need to add selectedUserObject
         selectedUserObject = userArray[i];   
-        fullNameText.value = userArray[i].fullName();
+        fullNameTextDL.value = userArray[i].fullName();
         birthDayDL.value = userArray[i].birthDate;
-        ageText.value = userArray[i].age();   //need to finish the proto
-        ageGroup.value= userArray[i].ageCategory();   //need to finish the proto
+        ageTextDL.value = userArray[i].age();   //need to finish the proto
+        ageGroupDL.value= userArray[i].ageCategory();   //need to finish the proto
+        drivingLicenseIdText.value = generateSpecificId(3,8);
         //toogle with animation
         //userInfoDiv.style.display = "block"
         //change the value of submit 
@@ -320,12 +340,26 @@ function loadDrivingLicenseCategory(){
         $(drivingLicCategoryList).append(`<option>${val}</option>`);
     })
 }
+/* empty the input fields in driving license menu */
+function emptyDrivingLicenseInputFields(){
+    userIdText.value = "";
+    fullNameTextDL.value = "";
+    birthDayDL.value = "";
+    ageTextDL.value = "";
+    ageGroupDL.value = "";
+    TestResult.value = "";
+    drivingResult.value = "";
+    firstAidResult.value = "";
+    drivingLicCategoryList.selectedIndex = "0";
+    drivingLicenseIdText.value = "";
+}
 /* Save the driving license */
 
 saveDrivingLicenseBtn.addEventListener("click", function(){
     let drivingLic;
-    drivingLic = new DrivingLicense(generateSpecificId(3,8), selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
+    drivingLic = new DrivingLicense(drivingLicenseIdText.value, selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
     drivingLicArray.push(drivingLic)
+    emptyDrivingLicenseInputFields();
 })
 
 function checkTestResults(){
@@ -334,4 +368,4 @@ function checkTestResults(){
 /* ready */
 $(document).ready(function(){
 
-})
+})/*  */

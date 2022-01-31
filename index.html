@@ -66,15 +66,15 @@
                     <input type="text" name="ageGroup" id="ageGroup" readonly>
                     <!-- params for the license -->
                     <label for="testResult">Result of test</label>
-                    <input type="number" name="" id="" min="0" max="100">
-                    <label for="resultOfDrive">Result of driving</label>
-                    <input type="number" name="" id="" min="0" max="100">
-                    <label for="firstAidTest">Result of First Aid</label>
-                    <input type="number" name="" id="" min="0" max="100">
+                    <input type="number" name="testResult" id="testResult" min="0" max="100">
+                    <label for="drivingResult">Result of driving</label>
+                    <input type="number" name="drivingResult" id="drivingResult" min="0" max="100">
+                    <label for="firstAidResult">Result of First Aid</label>
+                    <input type="number" name="firstAidResult" id="firstAidResult" min="0" max="100">
                     <!-- select the license category -->
                     <label for="drivingLicenseCategoryList">Driving license category</label>
                     <select name="drivingLicenseCategoryList" id="drivingLicenseCategoryList">
-                        <option value="default">Select category!</option>
+                        <option value="default" selected disabled hidden>Select category!</option>
                     </select>
                     <!-- generated ID for the license -->
                     <label for="drivingLicenseIdNumber">ID number</label>
