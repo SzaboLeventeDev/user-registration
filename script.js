@@ -123,18 +123,6 @@ DrivingLicense.prototype.dateOfIssue = currentDate();
 DrivingLicense.prototype.expirationDate = function(){
     //expiration date depending on ageCat 
     return year+4 + "-" + month + "-"+ dt;
-    /* console.log((date+4) + "-" + month +"-" + dt) */
-    //under 18 license is valid for 2 years
-
-    //between 18 and 40 is 6 years
-
-    //between 40 and 50 is 4 years
-
-    //between 50 and 60 is  3 years
-
-    //between 60 and 65 is 2 years
-
-    //between 65 and 70 is 1 years with plus conditions if they are true.
 }
 
 //Vehicle object
