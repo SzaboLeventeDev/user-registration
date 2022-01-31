@@ -79,8 +79,8 @@ People.prototype.ageCategory = function(){
         return "young";
     }
 }
-//Young object
 
+//Young object
 function Young(studId){
     People.apply(this, arguments);
     this.studentIdentificationNumber = studId;
@@ -95,6 +95,10 @@ function DrivingLicense (drivLicId, category){
     People.apply(this, arguments);
     Young.apply(this, arguments);
 }
+DrivingLicense.prototype = Object.create(People.prototype);
+DrivingLicense.prototype = Object.create(Young.prototype);
+DrivingLicense.prototype.constructor = DrivingLicense;
+
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
 
@@ -309,7 +313,7 @@ function loadDrivingLicenseCategory(){
 
 saveDrivingLicenseBtn.addEventListener("click", function(){
     let drivingLic;
-    drivingLic = new DrivingLicense(generateSpecificId(3,8), selectedUserObject.lastName, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.id );
+    drivingLic = new DrivingLicense(generateSpecificId(3,8), drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.firstName, selectedUserObject.gender, selectedUserObject.id, selectedUserObject.lastName  );
     drivingLicArray.push(drivingLic)
 })
 
