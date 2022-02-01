@@ -43,7 +43,8 @@ var minResultForTest = {
     "trafficEducationTest": 95,
     "firstAidTest": 90
 };
-var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"]
+var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"];
+var vehicleArray ;
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
@@ -147,13 +148,20 @@ function Vehicle(brand, model, dateOfProduct, dateOfCommission, vin, registratio
 function Car(){
     Vehicle.apply(this, arguments);
 }
+Car.prototype = Object.create(Vehicle.prototype);
+Car.prototype.constructor = Car;
+
 function Motorcycle(){
     Vehicle.apply(this, arguments);
 }
-function Truck(category){
+Motorcycle.prototype = Object.create(Vehicle.prototype);
+Motorcycle.prototype.constructor = Motorcycle;
+
+function Truck(){
     Vehicle.apply(this, arguments);
 }
-
+Truck.prototype = Object.create(Vehicle);
+Truck.prototype.constructor = Truck;
 /* save user */
 saveUserBtn.addEventListener("click", function(){
     /* check the age to choose the  matching object*/
