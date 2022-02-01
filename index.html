@@ -88,15 +88,58 @@
             </div>
             
         </div>
-        
+        <!-- div for create traffic license -->
+        <div class="trafficLicenseSection">
+            <!-- list for users and for vehicles -->
+            <ul id="userListForTrafficLicense">
+                <!-- list for users -->
+            </ul>
+            <ul id="vehicleListForTrafficLicense">
+                <!-- list for vehicles -->
+            </ul>
+            <div class="trafficLicenseInputContainer">
+                <label for="dlIdOfUser">Driving License ID number</label>
+                <input type="text" name="dlIdOfUser" id="dlIdOfUser">
+                <div class="userInfo" id="drivingLicenseInfoContainer"> 
+                    <div>
+                        <label for="">Select your status on the traffic license</label>
+                        <br>
+                        <label for="ownerRadioBtn">Owner</label>
+                        <input type="radio" name="checkIsOwer" id="ownerRadioBtn">
+                        <label for="operatorRadioBtn">Operator</label>
+                        <input type="radio" name="checkIsOwner" id="operatorRadioBtn">
+                    </div>   
+                    <label for="brandOfVehicle">Brand</label>
+                    <input type="text" name="brandOfVehicle" id="brandOfVehicle" readonly>
+                    <label for="modelOfVehicle">Model</label>
+                    <input type="text" name="modelOfVehicle" id="modelOfVehicle" readonly>
+                    <label for="dateOfProduction">Date of production</label>
+                    <input type="text" name="dateOfProduction" id="dateOfProduction" readonly>
+                    <label for="">VIN</label>
+                    <input type="text" name="vehicleIdentificationNumber" id="vehicleIdentificationNumber" readonly>
+                    <label for="reistrationNumber">Registration number</label>
+                    <input type="text" name="registrationNumber" id="registrationNumber" readonly>
+                    <label for="weightOfVehicle">Weight</label>
+                    <input type="text" name="weightOfVehicle" id="weightOfVehicle" readonly>
+                    <label for="categoryOfVehicle">Category</label>
+                    <input type="text" name="categoryOfVehicle" id="categoryOfVehicle" readonly>
+                </div>
+                <div class="btnSection">
+                    <button id="cancelTrafficLicenseBtn">Cancel</button>
+                    <button id="submitTrafficLicenseBtn">Check</button>
+                    <button id="saveTrafficLicenseBtn">Save</button>
+                </div>
+            </div>
+            
+        </div>        
     </main>
     <!-- navigation menu -->
     <nav>
         <i class="fa-duotone fa-bars"></i>
-        <h2>main page</h2>
-        <h2>user</h2>
-        <h2 id="drivingLicenseMenuBtn">driving license</h2>
-        <h2>traffic license</h2>
+        <h2>Main page</h2>
+        <h2>User</h2>
+        <h2 id="drivingLicenseMenuBtn">Driving license</h2>
+        <h2 id="trafficLicenseMenuBtn">Traffic license</h2>
     </nav>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
