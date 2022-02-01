@@ -56,7 +56,7 @@ button:hover{
 
 
 /* driving license */
-.drivingLicenseSection{
+.drivingLicenseSection, .trafficLicenseSection{
     flex-direction: row;
     justify-content: space-between;
     
@@ -85,4 +85,6 @@ li:nth-child{
 
 .userInfo{
     /* visibility: hidden; */
+    display: flex;
+    flex-direction: column;
 }
