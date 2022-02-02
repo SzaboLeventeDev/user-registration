@@ -48,10 +48,13 @@ var vehicleArray ;
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
+/* MENU buttons */
+var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
+var trafficLicenseBtn = document.getElementById("tafficLicenseMenuBtn");
+
 /* button declarations */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
-var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
 var submitBtn = document.getElementById("submitDrivingLicenseBtn");
 var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
 /* list declarations */
@@ -375,6 +378,14 @@ function checkTestResults(arr){
     }
     return true
 }
+/* MENU - traffic license */
+trafficLicenseBtn.addEventListener("click", function(){
+    if (userListForTrafficLicense.children.length != -1) {
+        $(userListForDrivingLicense).empty()
+        
+    }
+});
+
 /* ready */
 $(document).ready(function(){
 
