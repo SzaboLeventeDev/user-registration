@@ -21,6 +21,17 @@ var year;
 var month;
 var dt;
 
+/* declarations for traffic license */
+var brandOfVehicleText = document.getElementById("brandOfVehicle");
+var modelOfVehicleText = document.getElementById("modelOfVehicle");
+var dateOfProductionText = document.getElementById("dateOfProduction");
+var VINText = document.getElementById("vehicleIdentificationNumber");
+var registrationNumberText = document.getElementById("registrationNumber");
+var weightOfVehicleText = document.getElementById("weightOfVehicle");
+var categoryOfVehicleText = document.getElementById("categoryOfVehicle");
+
+/* declarations for checking input fields */
+var checkDrivinglicenseIdNumber = document.getElementById("dlIdOfUser");
 
 /* array declarations */
 var userArray = [];
@@ -312,25 +323,25 @@ function clickUser(array, selectedElement){
 /* check the user ID number */
 submitDrivingLicenseBtn.addEventListener("click", function(){
     console.log("sikeers kattintás");
-    checkUserId();
+    checkId(userIdText, userArray);
     loadDrivingLicenseCategory();
 })
-function checkUserId(){
+
+function checkId(input, array){
     
-  for (let i = 0; i < userArray.length;i++) {
-    if(userIdText.value == userArray[i].id && selectedUser == userArray[i].fullName()){   //need to corrigate the statement, lowercased or not?
+  for (let i = 0; i < array.length;i++) {
+    if(input.value == array[i].id && selectedUser == array[i].fullName()){   //need to corrigate the statement, lowercased or not?
         //true
         //new feature - need to add selectedUserObject
-        selectedUserObject = userArray[i];   
-        fullNameTextDL.value = userArray[i].fullName();
-        birthDayDL.value = userArray[i].birthDate;
-        ageTextDL.value = userArray[i].age();   //need to finish the proto
-        ageGroupDL.value= userArray[i].ageCategory();   //need to finish the proto
+        selectedUserObject = array[i];   
+        fullNameTextDL.value = array[i].fullName();
+        birthDayDL.value = array[i].birthDate;
+        ageTextDL.value = array[i].age();   //need to finish the proto
+        ageGroupDL.value= array[i].ageCategory();   
         drivingLicenseIdText.value = generateSpecificId(3,8);
         //toogle with animation
         //userInfoDiv.style.display = "block"
-        //change the value of submit 
-        submitDrivingLicenseBtn.setAttribute("value", "Save");
+        
         break;
     }
     else{
@@ -341,6 +352,7 @@ function checkUserId(){
   }
       
 }
+
 /* Load driving license category */
 function loadDrivingLicenseCategory(){
     driveableCategory.forEach(function(val){
@@ -394,10 +406,19 @@ trafficLicenseBtn.addEventListener("click", function(){
 });
 /* check the Driving License ID number */
 submitDrivingLicenseBtn.addEventListener("click", function(){
-    
+    checkDrivingLicenseId(drivingLicenseIdText, drivingLicenseUserList);
     
 })
-
+/* add values to the fields */
+function checkDrivingLicenseId(input, array){
+    for (let indexOfDrivingLicenseUserList = 0; indexOfDrivingLicenseUserList < array.length; indexOfDrivingLicenseUserList++) {
+        if (input.value == array[indexOfDrivingLicenseUserList].id && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
+            
+        }
+        
+    }
+    
+}
 
 /* ready */
 $(document).ready(function(){
