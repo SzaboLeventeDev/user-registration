@@ -56,7 +56,7 @@ var trafficLicenseBtn = document.getElementById("trafficLicenseMenuBtn");
 /* button declarations */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
-var submitBtn = document.getElementById("submitDrivingLicenseBtn");
+var submitDrivingLicenseBtn = document.getElementById("submitDrivingLicenseBtn");
 var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
 /* list declarations */
 var drivingLicenseUserList = document.getElementById("listForDrivingLicense");
@@ -310,7 +310,7 @@ function clickUser(array, selectedElement){
 }
 
 /* check the user ID number */
-submitBtn.addEventListener("click", function(){
+submitDrivingLicenseBtn.addEventListener("click", function(){
     console.log("sikeers kattintás");
     checkUserId();
     loadDrivingLicenseCategory();
@@ -330,7 +330,7 @@ function checkUserId(){
         //toogle with animation
         //userInfoDiv.style.display = "block"
         //change the value of submit 
-        submitBtn.setAttribute("value", "Save");
+        submitDrivingLicenseBtn.setAttribute("value", "Save");
         break;
     }
     else{
@@ -392,6 +392,12 @@ trafficLicenseBtn.addEventListener("click", function(){
         clickUser(drivingLicArray, trafficLicenseUserList);
     }
 });
+/* check the Driving License ID number */
+submitDrivingLicenseBtn.addEventListener("click", function(){
+    
+    
+})
+
 
 /* ready */
 $(document).ready(function(){
