@@ -21,6 +21,7 @@ var year;
 var month;
 var dt;
 
+
 /* array declarations */
 var userArray = [];
 var drivingLicArray = [];
@@ -50,7 +51,7 @@ var userInfoDiv = document.getElementById("userInfoContainer");
 
 /* MENU buttons */
 var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
-var trafficLicenseBtn = document.getElementById("tafficLicenseMenuBtn");
+var trafficLicenseBtn = document.getElementById("trafficLicenseMenuBtn");
 
 /* button declarations */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
@@ -58,8 +59,8 @@ var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
 var submitBtn = document.getElementById("submitDrivingLicenseBtn");
 var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
 /* list declarations */
-var drivingLicenseUserList = document.getElementById("listForDrivingLicense");//I am not sure I need this
-
+var drivingLicenseUserList = document.getElementById("listForDrivingLicense");
+var trafficLicenseUserList = document.getElementById("userListForTrafficLicense")
 
 
 //People object
@@ -270,20 +271,21 @@ drivingLicenseBtn.addEventListener("click", function(){
     //check if the ul has children element or not
     if(drivingLicenseUserList.children.length != 0){
         $(drivingLicenseUserList).empty();
-        userListForDrivingLicense();
+        generateListForUl(userArray, drivingLicenseUserList);
         clickUser();
     }
     else{
-        userListForDrivingLicense();
+        generateListForUl(userArray, drivingLicenseUserList);
         clickUser();
     }
     
 })
 /* list of users for generating driving license */
-function userListForDrivingLicense(){
+function generateListForUl(array, selectedElement){
+    
     console.log("users will be adding to the list");//line for test
-    userArray.forEach(function(val){
-        $("ul").append(`<li>${val.fullName()}</li>`);   
+    array.forEach(function(val){
+        $(selectedElement).append(`<li>${val.fullName()}</li>`);   
     })
     console.log("users added sucessfully");//line for test
 
@@ -380,9 +382,12 @@ function checkTestResults(arr){
 }
 /* MENU - traffic license */
 trafficLicenseBtn.addEventListener("click", function(){
-    if (userListForTrafficLicense.children.length != -1) {
-        $(userListForDrivingLicense).empty()
-        
+    if (trafficLicenseUserList.children.length != 0) {
+        $(trafficLicenseUserList).empty()
+        generateListForUl(drivingLicArray, trafficLicenseUserList);
+    }
+    else{
+        generateListForUl(drivingLicArray, trafficLicenseUserList);
     }
 });
 
