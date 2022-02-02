@@ -272,11 +272,11 @@ drivingLicenseBtn.addEventListener("click", function(){
     if(drivingLicenseUserList.children.length != 0){
         $(drivingLicenseUserList).empty();
         generateListForUl(userArray, drivingLicenseUserList);
-        clickUser();
+        clickUser(userArray, drivingLicenseUserList);
     }
     else{
         generateListForUl(userArray, drivingLicenseUserList);
-        clickUser();
+        clickUser(userArray, drivingLicenseUserList);
     }
     
 })
@@ -292,11 +292,11 @@ function generateListForUl(array, selectedElement){
     
 }
 /* click to the selected user for create driving license */
-function clickUser(){
+function clickUser(array, selectedElement){
     console.log("clickUser is invoking now")//line for test
-    for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) {  
-        drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){            
-            if (drivingLicenseUserList.children.length == -1) { //not sure if it is necessary
+    for (var indxOfUser = 0;  indxOfUser < array.length;  indxOfUser++) {  
+        selectedElement.children[indxOfUser].addEventListener("click", function(){            
+            if (selectedElement.children.length == -1) { //not sure if it is necessary
                 alert("Please add users or load the userlist!");
             }
             else{ 
@@ -385,9 +385,11 @@ trafficLicenseBtn.addEventListener("click", function(){
     if (trafficLicenseUserList.children.length != 0) {
         $(trafficLicenseUserList).empty()
         generateListForUl(drivingLicArray, trafficLicenseUserList);
+        clickUser(drivingLicArray, trafficLicenseUserList);
     }
     else{
         generateListForUl(drivingLicArray, trafficLicenseUserList);
+        clickUser(drivingLicArray, trafficLicenseUserList);
     }
 });
 
