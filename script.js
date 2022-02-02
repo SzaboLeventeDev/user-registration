@@ -125,18 +125,9 @@ function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, traffic
     
 }
 
-/* prototype for DrivingLicense choosing the appropriate inheritance */
-if(this.age >= 18){
-    console.log("DL proto from People");//line for test
+/* prototype for DrivingLicense */
     DrivingLicense.prototype = Object.create(People.prototype);
     DrivingLicense.prototype.constructor = DrivingLicense;
-}
-else if(this.age <18 && this.age <= 16){
-    console.log("DL proto from Young");//line for test
-    DrivingLicense.prototype = Object.create(Young.prototype);
-    DrivingLicense.prototype.constructor = DrivingLicense;
-
-}
 
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
