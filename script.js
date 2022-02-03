@@ -291,11 +291,11 @@ drivingLicenseBtn.addEventListener("click", function(){
     if(drivingLicenseUserList.children.length != 0){
         $(drivingLicenseUserList).empty();
         generateListForUl(userArray, drivingLicenseUserList);
-        clickUser(userArray, drivingLicenseUserList);
+        clickListItem(userArray, drivingLicenseUserList, emptyDrivingLicenseInputFields());
     }
     else{
         generateListForUl(userArray, drivingLicenseUserList);
-        clickUser(userArray, drivingLicenseUserList);
+        clickListItem(userArray, drivingLicenseUserList, emptyDrivingLicenseInputFields());
     }
     
 })
@@ -311,7 +311,7 @@ function generateListForUl(array, selectedElement){
     
 }
 /* click to the selected user for create driving license */
-function clickUser(array, selectedElement){
+function clickListItem(array, selectedElement, emptyFields){
     console.log("clickUser is invoking now")//line for test
     for (var indxOfUser = 0;  indxOfUser < array.length;  indxOfUser++) {  
         selectedElement.children[indxOfUser].addEventListener("click", function(){            
@@ -319,7 +319,7 @@ function clickUser(array, selectedElement){
                 alert("Please add users or load the userlist!");
             }
             else{ 
-                emptyDrivingLicenseInputFields();
+                emptyFields;
                 selectedUser = this.innerHTML;
                 console.log(selectedUser);//line for test
             }
@@ -405,13 +405,24 @@ trafficLicenseBtn.addEventListener("click", function(){
     if (trafficLicenseUserList.children.length != 0) {
         $(trafficLicenseUserList).empty()
         generateListForUl(drivingLicArray, trafficLicenseUserList);
-        clickUser(drivingLicArray, trafficLicenseUserList);
+        clickListItem(drivingLicArray, trafficLicenseUserList, emptyTrafficLicenseInputFields);
     }
     else{
         generateListForUl(drivingLicArray, trafficLicenseUserList);
-        clickUser(drivingLicArray, trafficLicenseUserList);
+        clickListItem(drivingLicArray, trafficLicenseUserList, emptyTrafficLicenseInputFields);
     }
 });
+
+/* empty fields */
+function emptyTrafficLicenseInputFields(){
+    brandOfVehicleText.value = "";
+    modelOfVehicleText.value = "";
+    dateOfProductionText.value = "";
+    VINText.value = "";
+    registrationNumberText.value = "";
+    weightOfVehicleText.value = "";
+    categoryOfVehicleText.value = "";
+}
 /* check the Driving License ID number */
 submitTrafficLicenseBtn.addEventListener("click", function(){
     console.log("traffic license check click")//line for test
@@ -458,6 +469,10 @@ function filterVehicleCategory(array, callbackFn){
     console.log("filter finished")
 }
 
+/* load vehicle data  */
+function loadVehicleData(){
+
+}
 /* ready */
 $(document).ready(function(){
 
