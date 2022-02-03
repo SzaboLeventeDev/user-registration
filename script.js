@@ -22,6 +22,7 @@ var month;
 var dt;
 
 /* declarations for traffic license */
+var drivingLicenseIdText = document.getElementById("dlIdOfUser");
 var brandOfVehicleText = document.getElementById("brandOfVehicle");
 var modelOfVehicleText = document.getElementById("modelOfVehicle");
 var dateOfProductionText = document.getElementById("dateOfProduction");
@@ -30,33 +31,43 @@ var registrationNumberText = document.getElementById("registrationNumber");
 var weightOfVehicleText = document.getElementById("weightOfVehicle");
 var categoryOfVehicleText = document.getElementById("categoryOfVehicle");
 
+
 /* declarations for checking input fields */
 var checkDrivinglicenseIdNumber = document.getElementById("dlIdOfUser");
 
 /* array declarations */
 var userArray = [];
 var drivingLicArray = [];
-var monthDictionary = { //maybe it is not necessary
-    "Jan": "01",
-    "Feb": "02",
-    "Mar": "03",
-    "Apr": "04",
-    "May": "05",
-    "Jun": "06",
-    "Jul": "07",
-    "Aug": "08",
-    "Sep": "09",
-    "Oct": "10",
-    "Nov": "11",
-    "Dec": "12"
-};
+
 var minResultForTest = {
     "drivingTest": 90,
     "trafficEducationTest": 95,
     "firstAidTest": 90
 };
 var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"];
-var vehicleArray ;
+var vehicleArray = [
+    {
+        "brand": "Mazda",
+        "model": "6",
+        "dateOfProduct": "2020",
+        "dateOfComission": "2020-11-01",
+        "vin":"vblewvfv96421",
+        "registrationNumber": "sde-432",
+        "weight": "1566 kg",
+        "category": "B2"
+    },
+    {
+        "brand": "Ford",
+        "model": "Mustang",
+        "dateOfProduct": "2021",
+        "dateOfComission": "2022-01-01",
+        "vin":"lwyjvpqh91630",
+        "registrationNumber": "svv-835",
+        "weight": "1681 kg",
+        "category": "B2"
+    },
+
+] ;
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
@@ -65,14 +76,20 @@ var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
 var trafficLicenseBtn = document.getElementById("trafficLicenseMenuBtn");
 
 /* button declarations */
+/* button declarations for user registration */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
+/* button declarations for traffic license registration */
 var submitDrivingLicenseBtn = document.getElementById("submitDrivingLicenseBtn");
 var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
+
+/* button declarations for traffic license registration */
+var submitTrafficLicenseBtn = document.getElementById("submitTrafficLicenseBtn");
+
 /* list declarations */
 var drivingLicenseUserList = document.getElementById("listForDrivingLicense");
-var trafficLicenseUserList = document.getElementById("userListForTrafficLicense")
-
+var trafficLicenseUserList = document.getElementById("userListForTrafficLicense");
+var trafficLicenseVehicleList = document.getElementById("vehicleListForTrafficLicense");
 
 //People object
 function People(firstName, lastName, birthDate, gender, id){
@@ -335,9 +352,9 @@ function checkId(input, array){
         
         break;
     }
-    else{
+    else if(input.value != array[i].id || selectedUser != array[i].fullName()){
         //false
-        alert("Check the user ID or the user, something is wrong!")
+        alert("Check the user ID or the user, something is wrong!")//Not in a good place, causes error if I no choose the first  line in every loop
     } 
       
   }
@@ -396,19 +413,43 @@ trafficLicenseBtn.addEventListener("click", function(){
     }
 });
 /* check the Driving License ID number */
-submitDrivingLicenseBtn.addEventListener("click", function(){
-    checkDrivingLicenseId(drivingLicenseIdText, drivingLicenseUserList);
+submitTrafficLicenseBtn.addEventListener("click", function(){
+    console.log("traffic license check click")//line for test
+    checkDrivingLicenseId(drivingLicenseIdText, drivingLicArray);
     
 })
 /* add values to the fields */
 function checkDrivingLicenseId(input, array){
+    console.log("check Driving license id begins");//line for test
     for (let indexOfDrivingLicenseUserList = 0; indexOfDrivingLicenseUserList < array.length; indexOfDrivingLicenseUserList++) {
-        if (input.value == array[indexOfDrivingLicenseUserList].id && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
-            
+        if (input.value == array[indexOfDrivingLicenseUserList].drivLicId && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
+            //filter the Vehicles by the category (Vehicle.category == DrivingLicense.category)
+            filterVehicleCategory(vehicleArray, listVehiclesForTrafficLicense);
         }
         
     }
-    
+    console.log("check Driving license id begins");//line for test
+}
+
+/* driving category and connections */
+
+
+/* check and filter the Vehicles by the category */
+function listVehiclesForTrafficLicense(idOfVehicle){
+    return $(trafficLicenseVehicleList).append(`<li>${idOfVehicle}</li>`);
+}
+
+function filterVehicleCategory(array, callbackFn){
+    array.filter(function(val){
+        let value;
+        //condition for the listing
+        if(val.category = selectedUser.category){
+            value = val.registrationNumber;
+            console.log(value);
+            callbackFn(value);
+        }
+        
+    })
 }
 
 /* ready */
