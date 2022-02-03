@@ -22,7 +22,7 @@ var month;
 var dt;
 
 /* declarations for traffic license */
-var drivingLicenseIdText = document.getElementById("dlIdOfUser");
+var drivingLicenseIdTextTL = document.getElementById("dlIdOfUser");
 var brandOfVehicleText = document.getElementById("brandOfVehicle");
 var modelOfVehicleText = document.getElementById("modelOfVehicle");
 var dateOfProductionText = document.getElementById("dateOfProduction");
@@ -415,20 +415,22 @@ trafficLicenseBtn.addEventListener("click", function(){
 /* check the Driving License ID number */
 submitTrafficLicenseBtn.addEventListener("click", function(){
     console.log("traffic license check click")//line for test
-    checkDrivingLicenseId(drivingLicenseIdText, drivingLicArray);
+    
+    checkDrivingLicenseId(drivingLicenseIdTextTL, drivingLicArray);
     
 })
 /* add values to the fields */
 function checkDrivingLicenseId(input, array){
     console.log("check Driving license id begins");//line for test
     for (let indexOfDrivingLicenseUserList = 0; indexOfDrivingLicenseUserList < array.length; indexOfDrivingLicenseUserList++) {
-        if (input.value == array[indexOfDrivingLicenseUserList].drivLicId && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
+        selectedUserObject = array[indexOfDrivingLicenseUserList] //need to use this line in the statement
+        if (input.value == selectedUserObject.drivLicId && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
             //filter the Vehicles by the category (Vehicle.category == DrivingLicense.category)
             filterVehicleCategory(vehicleArray, listVehiclesForTrafficLicense);
         }
         
     }
-    console.log("check Driving license id begins");//line for test
+    console.log("check Driving license id finished");//line for test
 }
 
 /* driving category and connections */
@@ -436,20 +438,24 @@ function checkDrivingLicenseId(input, array){
 
 /* check and filter the Vehicles by the category */
 function listVehiclesForTrafficLicense(idOfVehicle){
-    return $(trafficLicenseVehicleList).append(`<li>${idOfVehicle}</li>`);
+    console.log("listing vehicle")
+    return $(trafficLicenseVehicleList).append(`<li>${idOfVehicle.toUpperCase()}</li>`);
 }
 
 function filterVehicleCategory(array, callbackFn){
+    console.log("filter invokes")//line for test
     array.filter(function(val){
         let value;
         //condition for the listing
-        if(val.category = selectedUser.category){
+        console.log(val.category)//line for test
+        if(val.category == selectedUserObject.category){
             value = val.registrationNumber;
             console.log(value);
-            callbackFn(value);
+            return callbackFn(value);
         }
         
     })
+    console.log("filter finished")
 }
 
 /* ready */
