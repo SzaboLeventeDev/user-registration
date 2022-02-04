@@ -30,6 +30,8 @@ var VINText = document.getElementById("vehicleIdentificationNumber");
 var registrationNumberText = document.getElementById("registrationNumber");
 var weightOfVehicleText = document.getElementById("weightOfVehicle");
 var categoryOfVehicleText = document.getElementById("categoryOfVehicle");
+var selectedVehicle;
+var selectedVehicleObject;
 
 
 /* declarations for checking input fields */
@@ -85,6 +87,8 @@ var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
 
 /* button declarations for traffic license registration */
 var submitTrafficLicenseBtn = document.getElementById("submitTrafficLicenseBtn");
+var saveTrafficLicenseBtn = document.getElementById("saveTrafficLicenseBtn");
+var cancelTrafficLicenseBtn = document.getElementById("cancelTrafficLicenseBtn");
 
 /* list declarations */
 var drivingLicenseUserList = document.getElementById("listForDrivingLicense");
@@ -428,7 +432,7 @@ submitTrafficLicenseBtn.addEventListener("click", function(){
     console.log("traffic license check click")//line for test
     
     checkDrivingLicenseId(drivingLicenseIdTextTL, drivingLicArray);
-    
+    clickVehicle(trafficLicenseVehicleList);
 })
 /* add values to the fields */
 function checkDrivingLicenseId(input, array){
@@ -469,10 +473,38 @@ function filterVehicleCategory(array, callbackFn){
     console.log("filter finished")
 }
 
-/* load vehicle data  */
-function loadVehicleData(){
-
+/* click to the selected Vehicle  */
+function clickVehicle(selectedElement){
+    for(let indxOfListItem = 0; selectedElement.children.length; indxOfListItem++){
+        selectedElement.children[indxOfListItem].addEventListener("click", function(){
+            selectedVehicle = this.innerHTML;
+            console.log(selectedVehicle);//line for test
+            loadVehicleData(vehicleArray);
+        })
+    }
 }
+
+/* load Vehicle data */
+function loadVehicleData(array){
+    for(let indxOfVehicle = 0; array.length; indxOfVehicle++){
+        if (selectedVehicle.toLowerCase() == array[indxOfVehicle].registrationNumber) {
+            selectedVehicleObject = array[indxOfVehicle];
+            brandOfVehicleText.value = selectedVehicleObject.brand;
+            modelOfVehicleText.value = selectedVehicleObject.model;
+            dateOfProductionText.value = selectedVehicleObject.dateOfProduct;
+            VINText.value = selectedVehicleObject.vin;
+            registrationNumberText.value = selectedVehicleObject.registrationNumber;
+            weightOfVehicleText.value = selectedVehicleObject.weight;
+            categoryOfVehicleText.value = selectedVehicleObject.category;
+        }
+    }
+}
+
+/* save driving license */
+saveTrafficLicenseBtn.addEventListener("click", function(){
+    
+})
+
 /* ready */
 $(document).ready(function(){
 
