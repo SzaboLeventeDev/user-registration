@@ -158,7 +158,21 @@ DrivingLicense.prototype.expirationDate = function(){
     //expiration date depending on ageCat 
     return year+4 + "-" + month + "-"+ dt;
 }
+//Traffic license object
+function TrafficLicense(traffLicId){
+    this.id = traffLicId;
+}
+/* prototype of TrafficLicense */
+TrafficLicense.prototype = Object.create(People.prototype);
+TrafficLicense.prototype.constructor = TrafficLicense;
 
+/* date of issue */
+TrafficLicense.prototype.dateOfIssue = currentDate();
+
+/* expiration date */
+TrafficLicense.prototype.expirationDate = function(){
+    return year + 4 + "-" + month + "-" + dt;
+}
 //Vehicle object
 function Vehicle(brand, model, dateOfProduct, dateOfCommission, vin, registrationNumber, weight, category){
     this.brand = brand;
