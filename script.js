@@ -136,7 +136,7 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation,  idOfDriver,birthDateOfDriver, categoryOfVehicle){
+function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation,  idOfDriver,birthDateOfDriver, categoryOfVehicle, firstName, lastName){
     this.drivLicId = drivLicId;
     this.category = category;
     this.firstAidTest = firstAidTest;
@@ -145,6 +145,8 @@ function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, traffic
     this.driverId = idOfDriver;
     this.birthDay = birthDateOfDriver;
     this.category = categoryOfVehicle;
+    this.firstName = firstName;
+    this.lastName = lastName;
     /* People.apply(this, arguments); */
     /* Young.apply(this, arguments); */
     
@@ -157,7 +159,7 @@ function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, traffic
 
 /* full name of Driver */
 DrivingLicense.prototype.fullName = function(){
-    return selectedUserObject.firstName + " " + selectedUserObject.lastName;
+    return this.firstName + " " + this.lastName;
 }
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
@@ -421,7 +423,7 @@ saveDrivingLicenseBtn.addEventListener("click", function(){
     /* check the result of the test */
     if (checkTestResults(minResultForTest) == true) {
         //need to add the test results too.
-        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id,  selectedUserObject.birthDate, drivingLicCategoryList.value);
+        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id,  selectedUserObject.birthDate, drivingLicCategoryList.value, selectedUserObject.firstName, selectedUserObject.lastName);
         drivingLicArray.push(drivingLic);
         emptyDrivingLicenseInputFields();
     };
