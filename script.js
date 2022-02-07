@@ -21,43 +21,80 @@ var year;
 var month;
 var dt;
 
+/* declarations for traffic license */
+var drivingLicenseIdTextTL = document.getElementById("dlIdOfUser");
+var brandOfVehicleText = document.getElementById("brandOfVehicle");
+var modelOfVehicleText = document.getElementById("modelOfVehicle");
+var dateOfProductionText = document.getElementById("dateOfProduction");
+var VINText = document.getElementById("vehicleIdentificationNumber");
+var registrationNumberText = document.getElementById("registrationNumber");
+var weightOfVehicleText = document.getElementById("weightOfVehicle");
+var categoryOfVehicleText = document.getElementById("categoryOfVehicle");
+var selectedVehicle;
+var selectedVehicleObject;
+
+
+/* declarations for checking input fields */
+var checkDrivinglicenseIdNumber = document.getElementById("dlIdOfUser");
+
 /* array declarations */
 var userArray = [];
 var drivingLicArray = [];
-var monthDictionary = { //maybe it is not necessary
-    "Jan": "01",
-    "Feb": "02",
-    "Mar": "03",
-    "Apr": "04",
-    "May": "05",
-    "Jun": "06",
-    "Jul": "07",
-    "Aug": "08",
-    "Sep": "09",
-    "Oct": "10",
-    "Nov": "11",
-    "Dec": "12"
-};
+var trafficLicArray = [];
+
 var minResultForTest = {
     "drivingTest": 90,
     "trafficEducationTest": 95,
     "firstAidTest": 90
 };
 var driveableCategory = ["D1 - motorcycle", "D1", "D2", "B2", "U"];
-var vehicleArray ;
+var vehicleArray = [
+    {
+        "brand": "Mazda",
+        "model": "6",
+        "dateOfProduct": "2020",
+        "dateOfComission": "2020-11-01",
+        "vin":"vblewvfv96421",
+        "registrationNumber": "sde-432",
+        "weight": "1566 kg",
+        "category": "B2"
+    },
+    {
+        "brand": "Ford",
+        "model": "Mustang",
+        "dateOfProduct": "2021",
+        "dateOfComission": "2022-01-01",
+        "vin":"lwyjvpqh91630",
+        "registrationNumber": "svv-835",
+        "weight": "1681 kg",
+        "category": "B2"
+    },
+
+] ;
 /* div declarations */
 var userInfoDiv = document.getElementById("userInfoContainer");
 
+/* MENU buttons */
+var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
+var trafficLicenseBtn = document.getElementById("trafficLicenseMenuBtn");
+
 /* button declarations */
+/* button declarations for user registration */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
-var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
-var submitBtn = document.getElementById("submitDrivingLicenseBtn");
+/* button declarations for traffic license registration */
+var submitDrivingLicenseBtn = document.getElementById("submitDrivingLicenseBtn");
 var saveDrivingLicenseBtn = document.getElementById("saveDrivingLicenseBtn");
+
+/* button declarations for traffic license registration */
+var submitTrafficLicenseBtn = document.getElementById("submitTrafficLicenseBtn");
+var saveTrafficLicenseBtn = document.getElementById("saveTrafficLicenseBtn");
+var cancelTrafficLicenseBtn = document.getElementById("cancelTrafficLicenseBtn");
+
 /* list declarations */
-var drivingLicenseUserList = document.getElementById("listForDrivingLicense");//I am not sure I need this
-
-
+var drivingLicenseUserList = document.getElementById("listForDrivingLicense");
+var trafficLicenseUserList = document.getElementById("userListForTrafficLicense");
+var trafficLicenseVehicleList = document.getElementById("vehicleListForTrafficLicense");
 
 //People object
 function People(firstName, lastName, birthDate, gender, id){
@@ -99,21 +136,31 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation){
+function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation,  idOfDriver,birthDateOfDriver, categoryOfVehicle, firstName, lastName){
     this.drivLicId = drivLicId;
     this.category = category;
     this.firstAidTest = firstAidTest;
     this.drivingTest = drivingTest;
     this.trafficEducationTest = trafficEducation;
-    People.apply(this, arguments);
+    this.driverId = idOfDriver;
+    this.birthDay = birthDateOfDriver;
+    this.category = categoryOfVehicle;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    /* People.apply(this, arguments); */
     /* Young.apply(this, arguments); */
     
 }
 
 /* prototype for DrivingLicense */
-    DrivingLicense.prototype = Object.create(People.prototype);
-    DrivingLicense.prototype.constructor = DrivingLicense;
+    /* DrivingLicense.prototype = Object.create(People.prototype);
+    DrivingLicense.prototype.constructor = DrivingLicense; */
 
+
+/* full name of Driver */
+DrivingLicense.prototype.fullName = function(){
+    return this.firstName + " " + this.lastName;
+}
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
 
@@ -122,7 +169,28 @@ DrivingLicense.prototype.expirationDate = function(){
     //expiration date depending on ageCat 
     return year+4 + "-" + month + "-"+ dt;
 }
+//Traffic license object
+function TrafficLicense(traffLicId, brandOfVehicle, modelOfVehicle, dateOfComission, weightOfVehicle, categoryOfVehicle, ownerOfVehicle){
+    this.id = traffLicId;
+    this.brand = brandOfVehicle;
+    this.model = modelOfVehicle;
+    this.dateOfComission = dateOfComission;
+    this.weight = weightOfVehicle;
+    this.category = categoryOfVehicle;
+    this.owner = ownerOfVehicle;
+    /* Vehicle.apply(this, arguments); */
+}
+/* prototype of TrafficLicense */
+/* TrafficLicense.prototype = Object.create(People.prototype);
+TrafficLicense.prototype.constructor = TrafficLicense; */
 
+/* date of issue */
+TrafficLicense.prototype.dateOfIssue = currentDate();
+
+/* expiration date */
+TrafficLicense.prototype.expirationDate = function(){
+    return year + 4 + "-" + month + "-" + dt;
+}
 //Vehicle object
 function Vehicle(brand, model, dateOfProduct, dateOfCommission, vin, registrationNumber, weight, category){
     this.brand = brand;
@@ -258,35 +326,36 @@ drivingLicenseBtn.addEventListener("click", function(){
     //check if the ul has children element or not
     if(drivingLicenseUserList.children.length != 0){
         $(drivingLicenseUserList).empty();
-        userListForDrivingLicense();
-        clickUser();
+        generateListForUl(userArray, drivingLicenseUserList);
+        clickListItem(userArray, drivingLicenseUserList, emptyDrivingLicenseInputFields());
     }
     else{
-        userListForDrivingLicense();
-        clickUser();
+        generateListForUl(userArray, drivingLicenseUserList);
+        clickListItem(userArray, drivingLicenseUserList, emptyDrivingLicenseInputFields());
     }
     
 })
 /* list of users for generating driving license */
-function userListForDrivingLicense(){
+function generateListForUl(array, selectedElement){
+    
     console.log("users will be adding to the list");//line for test
-    userArray.forEach(function(val){
-        $("ul").append(`<li>${val.fullName()}</li>`);   
+    array.forEach(function(val){
+        $(selectedElement).append(`<li>${val.fullName()}</li>`);   
     })
     console.log("users added sucessfully");//line for test
 
     
 }
 /* click to the selected user for create driving license */
-function clickUser(){
+function clickListItem(array, selectedElement, emptyFields){
     console.log("clickUser is invoking now")//line for test
-    for (var indxOfUser = 0;  indxOfUser < userArray.length;  indxOfUser++) {  
-        drivingLicenseUserList.children[indxOfUser].addEventListener("click", function(){            
-            if (drivingLicenseUserList.children.length == -1) { //not sure if it is necessary
+    for (var indxOfUser = 0;  indxOfUser < array.length;  indxOfUser++) {  
+        selectedElement.children[indxOfUser].addEventListener("click", function(){            
+            if (selectedElement.children.length == -1) { //not sure if it is necessary
                 alert("Please add users or load the userlist!");
             }
             else{ 
-                emptyDrivingLicenseInputFields();
+                emptyFields;
                 selectedUser = this.innerHTML;
                 console.log(selectedUser);//line for test
             }
@@ -296,37 +365,38 @@ function clickUser(){
 }
 
 /* check the user ID number */
-submitBtn.addEventListener("click", function(){
+submitDrivingLicenseBtn.addEventListener("click", function(){
     console.log("sikeers kattintás");
-    checkUserId();
+    checkId(userIdText, userArray);
     loadDrivingLicenseCategory();
 })
-function checkUserId(){
+
+function checkId(input, array){
     
-  for (let i = 0; i < userArray.length;i++) {
-    if(userIdText.value == userArray[i].id && selectedUser == userArray[i].fullName()){   //need to corrigate the statement, lowercased or not?
+  for (let i = 0; i < array.length;i++) {
+    if(input.value == array[i].id && selectedUser == array[i].fullName()){   //need to corrigate the statement, lowercased or not?
         //true
         //new feature - need to add selectedUserObject
-        selectedUserObject = userArray[i];   
-        fullNameTextDL.value = userArray[i].fullName();
-        birthDayDL.value = userArray[i].birthDate;
-        ageTextDL.value = userArray[i].age();   //need to finish the proto
-        ageGroupDL.value= userArray[i].ageCategory();   //need to finish the proto
+        selectedUserObject = array[i];   
+        fullNameTextDL.value = array[i].fullName();
+        birthDayDL.value = array[i].birthDate;
+        ageTextDL.value = array[i].age();   //need to finish the proto
+        ageGroupDL.value= array[i].ageCategory();   
         drivingLicenseIdText.value = generateSpecificId(3,8);
         //toogle with animation
         //userInfoDiv.style.display = "block"
-        //change the value of submit 
-        submitBtn.setAttribute("value", "Save");
+        
         break;
     }
-    else{
+    else if(input.value != array[i].id || selectedUser != array[i].fullName()){
         //false
-        alert("Check the user ID or the user, something is wrong!")
+        alert("Check the user ID or the user, something is wrong!")//Not in a good place, causes error if I no choose the first  line in every loop
     } 
       
   }
       
 }
+
 /* Load driving license category */
 function loadDrivingLicenseCategory(){
     driveableCategory.forEach(function(val){
@@ -353,7 +423,7 @@ saveDrivingLicenseBtn.addEventListener("click", function(){
     /* check the result of the test */
     if (checkTestResults(minResultForTest) == true) {
         //need to add the test results too.
-        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
+        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id,  selectedUserObject.birthDate, drivingLicCategoryList.value, selectedUserObject.firstName, selectedUserObject.lastName);
         drivingLicArray.push(drivingLic);
         emptyDrivingLicenseInputFields();
     };
@@ -366,6 +436,111 @@ function checkTestResults(arr){
     }
     return true
 }
+/* MENU - traffic license */
+trafficLicenseBtn.addEventListener("click", function(){
+    if (trafficLicenseUserList.children.length != 0) {
+        $(trafficLicenseUserList).empty()
+        generateListForUl(drivingLicArray, trafficLicenseUserList);
+        clickListItem(drivingLicArray, trafficLicenseUserList, emptyTrafficLicenseInputFields);
+    }
+    else{
+        generateListForUl(drivingLicArray, trafficLicenseUserList);
+        clickListItem(drivingLicArray, trafficLicenseUserList, emptyTrafficLicenseInputFields);
+    }
+});
+
+/* empty fields */
+function emptyTrafficLicenseInputFields(){
+    brandOfVehicleText.value = "";
+    modelOfVehicleText.value = "";
+    dateOfProductionText.value = "";
+    VINText.value = "";
+    registrationNumberText.value = "";
+    weightOfVehicleText.value = "";
+    categoryOfVehicleText.value = "";
+}
+/* check the Driving License ID number */
+submitTrafficLicenseBtn.addEventListener("click", function(){
+    console.log("traffic license check click")//line for test
+    
+    checkDrivingLicenseId(drivingLicenseIdTextTL, drivingLicArray);
+    clickVehicle(trafficLicenseVehicleList);
+})
+/* add values to the fields */
+function checkDrivingLicenseId(input, array){
+    console.log("check Driving license id begins");//line for test
+    for (let indexOfDrivingLicenseUserList = 0; indexOfDrivingLicenseUserList < array.length; indexOfDrivingLicenseUserList++) {
+        selectedUserObject = array[indexOfDrivingLicenseUserList] //need to use this line in the statement
+        if (input.value == selectedUserObject.drivLicId && selectedUser == array[indexOfDrivingLicenseUserList].fullName()) {
+            //filter the Vehicles by the category (Vehicle.category == DrivingLicense.category)
+            filterVehicleCategory(vehicleArray, listVehiclesForTrafficLicense);
+        }
+        
+    }
+    console.log("check Driving license id finished");//line for test
+}
+
+/* driving category and connections */
+
+
+/* check and filter the Vehicles by the category */
+function listVehiclesForTrafficLicense(idOfVehicle){
+    console.log("listing vehicle")
+    return $(trafficLicenseVehicleList).append(`<li>${idOfVehicle.toUpperCase()}</li>`);
+}
+
+function filterVehicleCategory(array, callbackFn){
+    console.log("filter invokes")//line for test
+    array.filter(function(val){
+        let value;
+        //condition for the listing
+        console.log(val.category)//line for test
+        if(val.category == selectedUserObject.category){
+            value = val.registrationNumber;
+            console.log(value);
+            return callbackFn(value);
+        }
+        
+    })
+    console.log("filter finished")
+}
+
+/* click to the selected Vehicle  */
+function clickVehicle(selectedElement){
+    for(let indxOfListItem = 0; selectedElement.children.length; indxOfListItem++){
+        selectedElement.children[indxOfListItem].addEventListener("click", function(){
+            selectedVehicle = this.innerHTML;
+            console.log(selectedVehicle);//line for test
+            loadVehicleData(vehicleArray);
+        })
+    }
+}
+
+/* load Vehicle data */
+function loadVehicleData(array){
+    for(let indxOfVehicle = 0; array.length; indxOfVehicle++){
+        if (selectedVehicle.toLowerCase() == array[indxOfVehicle].registrationNumber) {
+            selectedVehicleObject = array[indxOfVehicle];
+            brandOfVehicleText.value = selectedVehicleObject.brand;
+            modelOfVehicleText.value = selectedVehicleObject.model;
+            dateOfProductionText.value = selectedVehicleObject.dateOfProduct;
+            VINText.value = selectedVehicleObject.vin;
+            registrationNumberText.value = selectedVehicleObject.registrationNumber;
+            weightOfVehicleText.value = selectedVehicleObject.weight;
+            categoryOfVehicleText.value = selectedVehicleObject.category;
+        }
+    }
+}
+
+/* save traffic license */
+saveTrafficLicenseBtn.addEventListener("click", function(){
+    console.log("save traffLic begin");//line for test
+    let license  = new TrafficLicense(generateSpecificId(6,6), selectedVehicleObject.brand, selectedVehicleObject.model, selectedVehicleObject.dateOfComission, selectedVehicleObject.weight, selectedVehicleObject.category, selectedUserObject.fullName());
+    //need to check the generated id duplication.
+    trafficLicArray.push(license);
+    console.log(license);//line for test
+})
+
 /* ready */
 $(document).ready(function(){
 
