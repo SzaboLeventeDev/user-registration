@@ -136,15 +136,15 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation, fullNameOfDriver, idOfDriver,birthDateOfDriver){
+function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation,  idOfDriver,birthDateOfDriver, categoryOfVehicle){
     this.drivLicId = drivLicId;
     this.category = category;
     this.firstAidTest = firstAidTest;
     this.drivingTest = drivingTest;
     this.trafficEducationTest = trafficEducation;
-    this.fullName = fullNameOfDriver;
     this.driverId = idOfDriver;
     this.birthDay = birthDateOfDriver;
+    this.category = categoryOfVehicle;
     /* People.apply(this, arguments); */
     /* Young.apply(this, arguments); */
     
@@ -154,6 +154,11 @@ function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, traffic
     /* DrivingLicense.prototype = Object.create(People.prototype);
     DrivingLicense.prototype.constructor = DrivingLicense; */
 
+
+/* full name of Driver */
+DrivingLicense.prototype.fullName = function(){
+    return selectedUserObject.firstName + " " + selectedUserObject.lastName;
+}
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
 
@@ -416,7 +421,7 @@ saveDrivingLicenseBtn.addEventListener("click", function(){
     /* check the result of the test */
     if (checkTestResults(minResultForTest) == true) {
         //need to add the test results too.
-        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.fullName(), selectedUserObject.id,  selectedUserObject.birthDate);
+        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id,  selectedUserObject.birthDate, drivingLicCategoryList.value);
         drivingLicArray.push(drivingLic);
         emptyDrivingLicenseInputFields();
     };
