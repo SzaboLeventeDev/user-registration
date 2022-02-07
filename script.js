@@ -136,20 +136,23 @@ Young.prototype = Object.create(People.prototype);
 Young.prototype.constructor = Young;
 
 //driving license object
-function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation){
+function DrivingLicense (drivLicId, category, firstAidTest, drivingTest, trafficEducation, fullNameOfDriver, idOfDriver,birthDateOfDriver){
     this.drivLicId = drivLicId;
     this.category = category;
     this.firstAidTest = firstAidTest;
     this.drivingTest = drivingTest;
     this.trafficEducationTest = trafficEducation;
-    People.apply(this, arguments);
+    this.fullName = fullNameOfDriver;
+    this.driverId = idOfDriver;
+    this.birthDay = birthDateOfDriver;
+    /* People.apply(this, arguments); */
     /* Young.apply(this, arguments); */
     
 }
 
 /* prototype for DrivingLicense */
-    DrivingLicense.prototype = Object.create(People.prototype);
-    DrivingLicense.prototype.constructor = DrivingLicense;
+    /* DrivingLicense.prototype = Object.create(People.prototype);
+    DrivingLicense.prototype.constructor = DrivingLicense; */
 
 /* date of issue */
 DrivingLicense.prototype.dateOfIssue = currentDate();
@@ -413,7 +416,7 @@ saveDrivingLicenseBtn.addEventListener("click", function(){
     /* check the result of the test */
     if (checkTestResults(minResultForTest) == true) {
         //need to add the test results too.
-        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.id, selectedUserObject.firstName, drivingLicCategoryList.value, selectedUserObject.birthDate, selectedUserObject.gender, selectedUserObject.lastName  );
+        drivingLic = new DrivingLicense(drivingLicenseIdText.value, drivingLicCategoryList.value, firstAidResult.value, drivingResult.value, TestResult.value, selectedUserObject.fullName(), selectedUserObject.id,  selectedUserObject.birthDate);
         drivingLicArray.push(drivingLic);
         emptyDrivingLicenseInputFields();
     };
@@ -522,7 +525,7 @@ function loadVehicleData(array){
     }
 }
 
-/* save driving license */
+/* save traffic license */
 saveTrafficLicenseBtn.addEventListener("click", function(){
     console.log("save traffLic begin");//line for test
     let license  = new TrafficLicense(generateSpecificId(6,6), selectedVehicleObject.brand, selectedVehicleObject.model, selectedVehicleObject.dateOfComission, selectedVehicleObject.weight, selectedVehicleObject.category, selectedUserObject.fullName());
