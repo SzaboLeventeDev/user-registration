@@ -540,6 +540,11 @@ saveTrafficLicenseBtn.addEventListener("click", function(){
     trafficLicArray.push(license);
     console.log(license);//line for test
 })
+/* MAIN MENU */
+/* choose the content of the list */
+function chooseContentForTheList(){
+
+}
 
 /* ready */
 $(document).ready(function(){
