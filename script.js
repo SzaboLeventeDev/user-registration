@@ -40,6 +40,7 @@ var checkDrivinglicenseIdNumber = document.getElementById("dlIdOfUser");
 /* array declarations */
 var userArray = [];
 var drivingLicArray = [];
+var trafficLicArray = [];
 
 var minResultForTest = {
     "drivingTest": 90,
@@ -159,12 +160,19 @@ DrivingLicense.prototype.expirationDate = function(){
     return year+4 + "-" + month + "-"+ dt;
 }
 //Traffic license object
-function TrafficLicense(traffLicId){
+function TrafficLicense(traffLicId, brandOfVehicle, modelOfVehicle, dateOfComission, weightOfVehicle, categoryOfVehicle, ownerOfVehicle){
     this.id = traffLicId;
+    this.brand = brandOfVehicle;
+    this.model = modelOfVehicle;
+    this.dateOfComission = dateOfComission;
+    this.weight = weightOfVehicle;
+    this.category = categoryOfVehicle;
+    this.owner = ownerOfVehicle;
+    /* Vehicle.apply(this, arguments); */
 }
 /* prototype of TrafficLicense */
-TrafficLicense.prototype = Object.create(People.prototype);
-TrafficLicense.prototype.constructor = TrafficLicense;
+/* TrafficLicense.prototype = Object.create(People.prototype);
+TrafficLicense.prototype.constructor = TrafficLicense; */
 
 /* date of issue */
 TrafficLicense.prototype.dateOfIssue = currentDate();
@@ -516,7 +524,11 @@ function loadVehicleData(array){
 
 /* save driving license */
 saveTrafficLicenseBtn.addEventListener("click", function(){
-    
+    console.log("save traffLic begin");//line for test
+    let license  = new TrafficLicense(generateSpecificId(6,6), selectedVehicleObject.brand, selectedVehicleObject.model, selectedVehicleObject.dateOfComission, selectedVehicleObject.weight, selectedVehicleObject.category, selectedUserObject.fullName());
+    //need to check the generated id duplication.
+    trafficLicArray.push(license);
+    console.log(license);//line for test
 })
 
 /* ready */
