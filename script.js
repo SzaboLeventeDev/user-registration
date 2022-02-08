@@ -590,15 +590,21 @@ mainPageBtn.addEventListener("click", function(){
                 /* empty list */
                 $(mainList).empty()
                 /* list users */
-                generateListForUl(vehicleArray, mainList)
+                listVehicleForMainMenu(vehicleArray, mainList)
             }
             else{
                 /* list users */
-                generateListForUl(vehicleArray, mainList)
+                listVehicleForMainMenu(vehicleArray, mainList)
             }
         }
     })
 })
+
+function listVehicleForMainMenu(array, targetElement){
+    array.forEach(function (val){
+        $(targetElement).append(`<li>${val.registrationNumber.toUpperCase()}</li>`)
+    });
+}
 /* choose the content of the list */
 /* function chooseContentForTheList(){
     //choose what to list
