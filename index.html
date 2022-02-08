@@ -21,9 +21,10 @@
                 <!-- div for filter -->
                 <div>
                     <label for="listUsers">User</label>
-                    <input type="radio" name="listUsers" id="listUsers">
+                    <input type="radio" name="filterListedElements" id="listUsers" value="user">
                     <label for="listVehicle">Vehicle</label>
-                    <input type="radio" name="listVehicles" id="listVehicles">
+                    <input type="radio" name="filterListedElements" id="listVehicles" value="vehicle">
+                    <button id="listFilteredElements" type="submit">List result</button>
                 </div>
                 <!-- list registered users or vehicles -->
                 <ul id="universalList">

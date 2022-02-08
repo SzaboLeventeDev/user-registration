@@ -21,6 +21,12 @@ var year;
 var month;
 var dt;
 
+/* declarations for main menu */
+/* var selectedFilterRadioBtn = document.querySelector('input[name: filterListedElements]:checked'); */
+var listUsersForMain = document.getElementById("listUsers");
+var listVehiclesForMain = document.getElementById("listVehicles");
+var mainList = document.getElementById("universalList");
+
 /* declarations for traffic license */
 var drivingLicenseIdTextTL = document.getElementById("dlIdOfUser");
 var brandOfVehicleText = document.getElementById("brandOfVehicle");
@@ -75,10 +81,13 @@ var vehicleArray = [
 var userInfoDiv = document.getElementById("userInfoContainer");
 
 /* MENU buttons */
+var mainPageBtn = document.getElementById("homePageMenuBtn");
 var drivingLicenseBtn = document.getElementById("drivingLicenseMenuBtn");
 var trafficLicenseBtn = document.getElementById("trafficLicenseMenuBtn");
 
 /* button declarations */
+/* button declarations for main page registration */
+var listBtn = document.getElementById("listFilteredElements");
 /* button declarations for user registration */
 var saveUserBtn = document.getElementById("saveUserRegistrationBtn");
 var cancelUserBtn = document.getElementById("cancelUserRegistrationBtn");
@@ -541,12 +550,68 @@ saveTrafficLicenseBtn.addEventListener("click", function(){
     console.log(license);//line for test
 })
 /* MAIN MENU */
-/* choose the content of the list */
-function chooseContentForTheList(){
+mainPageBtn.addEventListener("click", function(){
+    console.log("main page clicked");
+    listBtn.addEventListener("click", function(){
+        //version 1
+        /* let selectedArr = document.querySelector('input[type = radio]');
 
-}
+        for (var i in selectedArr){
+            if(selectedArr[i].checked === true && selectedArr[i].value == "user"){
+                generateListForUl(userArray, mainList)
+            }
+        } */
+        //version2
+        /* let checkedVal = document.querySelector('input[name = filterListedElements]:checked').value; */
+        let checked;
+        if (listUsersForMain.checked == true) {
+            listVehiclesForMain.checked == false;
+            checked = listUsersForMain.value;
+            console.log(checked);
+            
+            if (mainList.children.length != 0) {
+                /* empty list */
+                $(mainList).empty()
+                /* list users */
+                generateListForUl(userArray, mainList)
+            }
+            else{
+                /* list users */
+                generateListForUl(userArray, mainList)
+            }
+            
+        }
+        else if(listVehiclesForMain.checked == true){
+            listUsersForMain.checked == false;
+            checked = listVehiclesForMain.value;
+            console.log(checked);
+
+            if (mainList.children.length != 0) {
+                /* empty list */
+                $(mainList).empty()
+                /* list users */
+                generateListForUl(vehicleArray, mainList)
+            }
+            else{
+                /* list users */
+                generateListForUl(vehicleArray, mainList)
+            }
+        }
+    })
+})
+/* choose the content of the list */
+/* function chooseContentForTheList(){
+    //choose what to list
+    if(listUsersForMain.checked == true){
+        generateListForUl(userArray, mainList)
+    }
+    else if(listVehiclesForMain.checked == true){
+        listUsersForMain.checked == false;
+        generateListForUl(vehicleArray, mainList)
+    }
+} */
 
 /* ready */
 $(document).ready(function(){
-
-})/*  */
+/* chooseContentForTheList() */
+})
