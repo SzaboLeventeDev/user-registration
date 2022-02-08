@@ -33,7 +33,7 @@ nav{margin-top: 32.160px;
 }
 
 /* user */
-.user, .drivingLicenseSection, .trafficLicenseSection{
+.user, .drivingLicenseSection, .trafficLicenseSection, .mainSection{
     margin: auto;
     width: 30vw;
     display: flex;

@@ -17,9 +17,24 @@
         <h1>User registration portal for buying Vehicle</h1>
         <!-- divs for summarize registered users -->
         <div class="summary">
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="mainSection">
+                <!-- div for filter -->
+                <div>
+                    <label for="listUsers">User</label>
+                    <input type="radio" name="filterListedElements" id="listUsers" value="user">
+                    <label for="listVehicle">Vehicle</label>
+                    <input type="radio" name="filterListedElements" id="listVehicles" value="vehicle">
+                    <button id="listFilteredElements" type="submit">List result</button>
+                </div>
+                <!-- list registered users or vehicles -->
+                <ul id="universalList">
+
+                </ul>
+            </div>
+            <!-- div for the cards -->
+            <div id="cardContainer">
+
+            </div>
         </div>
         <!-- div for registrate users -->
         <div class="user">
@@ -41,13 +56,13 @@
         </div>
         <!-- div for create driving license -->
         <div class="drivingLicenseSection">
-                <!-- list of registered users -->
-                <ul id="listForDrivingLicense">
-                    <!-- <li>test</li>
-                    <li>test</li>
-                    <li>test</li>
-                    <li>test</li> -->
-                </ul>
+            <!-- list of registered users -->
+            <ul id="listForDrivingLicense">
+                <!-- <li>test</li>
+                <li>test</li>
+                <li>test</li>
+                <li>test</li> -->
+            </ul>
             <!-- create driving license for the selected user -->
             <div class="drivingLicenseInputContainer">
                 <!--  personal info-->
